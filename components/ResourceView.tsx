@@ -137,27 +137,27 @@ const UploadModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpe
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in">
       <div className="bg-surface rounded-xl shadow-2xl w-[600px] overflow-hidden border border-border animate-scale-in">
-        <div className="bg-zinc-900 px-6 py-4 border-b border-border flex justify-between items-center">
-          <h3 className="font-semibold text-zinc-100">上传政策</h3>
-          <button onClick={onClose}><X size={20} className="text-zinc-500 hover:text-zinc-300" /></button>
+        <div className="bg-surface px-6 py-4 border-b border-border flex justify-between items-center">
+          <h3 className="font-semibold text-text-primary">上传政策</h3>
+          <button onClick={onClose}><X size={20} className="text-text-muted hover:text-text-secondary" /></button>
         </div>
         <div className="p-6">
-          <div className="border-2 border-dashed border-zinc-700 rounded-lg p-8 text-center bg-zinc-950 hover:bg-zinc-900 transition-colors cursor-pointer relative group">
+          <div className="border-2 border-dashed border-border-highlight rounded-lg p-8 text-center bg-background hover:bg-surface-highlight transition-colors cursor-pointer relative group">
              <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" onChange={handleFileSelect} />
              <Upload className="mx-auto text-blue-500 mb-2 group-hover:scale-110 transition-transform" size={32} />
-             <p className="text-sm text-zinc-400">点击选择本地文件</p>
+             <p className="text-sm text-text-muted">点击选择本地文件</p>
           </div>
 
           {files.length > 0 && (
             <div className="mt-6">
-              <h4 className="text-xs font-semibold text-zinc-500 uppercase mb-2">已选文件</h4>
+              <h4 className="text-xs font-semibold text-text-muted uppercase mb-2">已选文件</h4>
               <div className="space-y-2">
                 {files.map((file, idx) => (
-                  <div key={idx} className="flex items-center gap-3 bg-zinc-900 border border-border p-2 rounded-md animate-slide-up">
-                    <FileText size={16} className="text-zinc-500" />
-                    <span className="text-sm text-zinc-300 flex-1 truncate">{file.name}</span>
+                  <div key={idx} className="flex items-center gap-3 bg-surface border border-border p-2 rounded-md animate-slide-up">
+                    <FileText size={16} className="text-text-muted" />
+                    <span className="text-sm text-text-secondary flex-1 truncate">{file.name}</span>
                     <select 
-                      className="text-xs border-border border rounded px-1 py-0.5 bg-zinc-950 text-zinc-300 focus:ring-1 focus:ring-blue-500"
+                      className="text-xs border-border border rounded px-1 py-0.5 bg-background text-text-secondary focus:ring-1 focus:ring-blue-500"
                       value={file.type}
                       onChange={(e) => {
                         const newFiles = [...files];
@@ -170,7 +170,7 @@ const UploadModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpe
                       <option>法律</option>
                     </select>
                     <select 
-                      className="text-xs border-border border rounded px-1 py-0.5 bg-zinc-950 text-zinc-300 focus:ring-1 focus:ring-blue-500"
+                      className="text-xs border-border border rounded px-1 py-0.5 bg-background text-text-secondary focus:ring-1 focus:ring-blue-500"
                       value={file.validity}
                       onChange={(e) => {
                         const newFiles = [...files];
@@ -191,8 +191,8 @@ const UploadModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpe
             </div>
           )}
         </div>
-        <div className="px-6 py-4 bg-zinc-900 border-t border-border flex justify-end gap-3">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-800 rounded-md transition-colors">取消</button>
+        <div className="px-6 py-4 bg-surface border-t border-border flex justify-end gap-3">
+          <button onClick={onClose} className="px-4 py-2 text-sm text-text-muted hover:bg-surface-highlight rounded-md transition-colors">取消</button>
           <button onClick={onClose} className="px-4 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-colors">上传</button>
         </div>
       </div>
@@ -287,7 +287,7 @@ const ResourceView: React.FC = () => {
   const renderSidebar = () => (
     <div className="w-56 bg-surface border-r border-border flex flex-col py-4 shrink-0">
       <div className="px-4 mb-6">
-        <h2 className="text-lg font-bold text-zinc-100 flex items-center gap-2">
+        <h2 className="text-lg font-bold text-text-primary flex items-center gap-2">
           <BookOpen className="text-blue-500" size={20} /> 资源中心
         </h2>
       </div>
@@ -314,8 +314,8 @@ const ResourceView: React.FC = () => {
             }}
             className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-md transition-all duration-200 ${
               activeTab === item.id 
-                ? 'bg-zinc-800 text-white shadow-sm translate-x-1' 
-                : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200 hover:translate-x-1'
+                ? 'bg-surface-highlight text-text-primary shadow-sm translate-x-1' 
+                : 'text-text-muted hover:bg-surface-highlight/50 hover:text-text-primary hover:translate-x-1'
             }`}
           >
             <item.icon size={18} />
@@ -335,17 +335,17 @@ const ResourceView: React.FC = () => {
               <div className="p-4 border-b border-border flex items-center gap-2">
                   <button 
                     onClick={() => setSelectedPolicy(null)}
-                    className="flex items-center gap-1 text-sm text-zinc-400 hover:text-white transition-colors"
+                    className="flex items-center gap-1 text-sm text-text-muted hover:text-text-primary transition-colors"
                   >
                       <ArrowLeft size={16} /> 返回
                   </button>
-                  <div className="w-px h-4 bg-zinc-700 mx-2"></div>
-                  <h3 className="font-bold text-zinc-200">政策详情</h3>
+                  <div className="w-px h-4 bg-border-highlight mx-2"></div>
+                  <h3 className="font-bold text-text-primary">政策详情</h3>
               </div>
 
               {/* Content */}
               <div className="flex-1 overflow-y-auto p-8 max-w-5xl mx-auto w-full custom-scrollbar">
-                  <h1 className="text-3xl font-bold text-zinc-100 text-center mb-10">{selectedPolicy.title}</h1>
+                  <h1 className="text-3xl font-bold text-text-primary text-center mb-10">{selectedPolicy.title}</h1>
                   
                   {/* Metadata Info */}
                   <div className="mb-8">
@@ -355,24 +355,24 @@ const ResourceView: React.FC = () => {
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-12 text-sm bg-surface/50 p-6 rounded-xl border border-border">
                           <div>
-                              <span className="text-zinc-500 block mb-1">发文机关:</span>
-                              <span className="text-zinc-200">{selectedPolicy.organ || '-'}</span>
+                              <span className="text-text-muted block mb-1">发文机关:</span>
+                              <span className="text-text-primary">{selectedPolicy.organ || '-'}</span>
                           </div>
                           <div>
-                              <span className="text-zinc-500 block mb-1">发文时间:</span>
-                              <span className="text-zinc-200">{selectedPolicy.date || '-'}</span>
+                              <span className="text-text-muted block mb-1">发文时间:</span>
+                              <span className="text-text-primary">{selectedPolicy.date || '-'}</span>
                           </div>
                            <div>
-                              <span className="text-zinc-500 block mb-1">公文类型:</span>
-                              <span className="text-zinc-200">{selectedPolicy.type || '通知'}</span>
+                              <span className="text-text-muted block mb-1">公文类型:</span>
+                              <span className="text-text-primary">{selectedPolicy.type || '通知'}</span>
                           </div>
                           <div>
-                              <span className="text-zinc-500 block mb-1">发文字号:</span>
-                              <span className="text-zinc-200">-</span>
+                              <span className="text-text-muted block mb-1">发文字号:</span>
+                              <span className="text-text-primary">-</span>
                           </div>
                           <div>
-                              <span className="text-zinc-500 block mb-1">行使时效:</span>
-                              <span className="text-zinc-200">无效</span>
+                              <span className="text-text-muted block mb-1">行使时效:</span>
+                              <span className="text-text-primary">无效</span>
                           </div>
                       </div>
                   </div>
@@ -383,7 +383,7 @@ const ResourceView: React.FC = () => {
                           <div className="w-1 h-4 bg-blue-500 rounded-full"></div>
                           <h4 className="font-semibold text-blue-500">政策全文</h4>
                       </div>
-                      <div className="text-zinc-300 leading-relaxed space-y-4 text-justify min-h-[300px]">
+                      <div className="text-text-secondary leading-relaxed space-y-4 text-justify min-h-[300px]">
                           <p>
                               为贯彻落实国家关于加快数字化发展的战略部署，深化新一代信息技术与制造业融合发展，推动制造业高端化、智能化、绿色化发展，特制定本行动计划。
                           </p>
@@ -422,23 +422,23 @@ const ResourceView: React.FC = () => {
       <div className="bg-surface border-b border-border p-4 shadow-sm">
         <div className="flex flex-wrap items-center gap-4">
           <div className="relative flex-1 min-w-[200px]">
-            <Search className="absolute left-3 top-2.5 text-zinc-500" size={16} />
+            <Search className="absolute left-3 top-2.5 text-text-muted" size={16} />
             <input 
               type="text" 
               placeholder="搜索政策标题..." 
-              className="w-full pl-9 pr-3 py-2 bg-zinc-950 border border-border rounded-lg text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder:text-zinc-600"
+              className="w-full pl-9 pr-3 py-2 bg-background border border-border rounded-lg text-sm text-text-primary focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder:text-text-muted"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <div className="flex gap-2">
-            <button className="flex items-center gap-2 px-3 py-2 border border-border rounded-lg text-sm text-zinc-400 hover:bg-zinc-800 bg-zinc-900 transition-colors">
+            <button className="flex items-center gap-2 px-3 py-2 border border-border rounded-lg text-sm text-text-muted hover:bg-surface-highlight bg-surface transition-colors">
               <Calendar size={16} /> 日期范围 <ChevronDown size={14} />
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 border border-border rounded-lg text-sm text-zinc-400 hover:bg-zinc-800 bg-zinc-900 transition-colors">
+            <button className="flex items-center gap-2 px-3 py-2 border border-border rounded-lg text-sm text-text-muted hover:bg-surface-highlight bg-surface transition-colors">
               <Tag size={16} /> 政策类型 <ChevronDown size={14} />
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 border border-border rounded-lg text-sm text-zinc-400 hover:bg-zinc-800 bg-zinc-900 transition-colors">
+            <button className="flex items-center gap-2 px-3 py-2 border border-border rounded-lg text-sm text-text-muted hover:bg-surface-highlight bg-surface transition-colors">
               <Filter size={16} /> 来源 <ChevronDown size={14} />
             </button>
             <button 
@@ -455,58 +455,58 @@ const ResourceView: React.FC = () => {
       <div className="p-6 overflow-y-auto">
         <div className="grid gap-3">
           {MOCK_POLICIES.filter(p => p.title.toLowerCase().includes(searchQuery.toLowerCase())).map((policy) => (
-            <div key={policy.id} onClick={() => setSelectedPolicy(policy)} className="bg-surface p-4 rounded-lg border border-border hover:border-zinc-600 transition-all group flex items-center gap-4 hover:translate-x-1 duration-200 cursor-pointer">
+            <div key={policy.id} onClick={() => setSelectedPolicy(policy)} className="bg-surface p-4 rounded-lg border border-border hover:border-text-muted transition-all group flex items-center gap-4 hover:translate-x-1 duration-200 cursor-pointer">
               
               {/* Content Area */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-2">
-                   <h3 className="font-semibold text-zinc-200 text-base truncate group-hover:text-blue-400 transition-colors">{policy.title}</h3>
-                   <span className={`text-[10px] px-2 py-0.5 rounded border ${policy.source === '系统数据' ? 'bg-green-900/20 text-green-400 border-green-900/30' : 'bg-orange-900/20 text-orange-400 border-orange-900/30'} shrink-0`}>
+                   <h3 className="font-semibold text-text-primary text-base truncate group-hover:text-blue-400 transition-colors">{policy.title}</h3>
+                   <span className={`text-[10px] px-2 py-0.5 rounded border ${policy.source === '系统数据' ? 'bg-green-500/10 text-green-500 border-green-500/20' : 'bg-orange-500/10 text-orange-500 border-orange-500/20'} shrink-0`}>
                     {policy.source}
                   </span>
                 </div>
                 
-                <div className="flex flex-wrap items-center gap-y-2 text-xs text-zinc-500">
+                <div className="flex flex-wrap items-center gap-y-2 text-xs text-text-muted">
                    <div className="flex items-center gap-2 min-w-[120px]">
-                      <span className="text-zinc-600">发文日期</span>
-                      <span className="text-zinc-400">{policy.date}</span>
+                      <span className="text-text-muted">发文日期</span>
+                      <span className="text-text-muted">{policy.date}</span>
                    </div>
-                   <div className="w-px h-3 bg-zinc-800 mx-3 hidden sm:block"></div>
+                   <div className="w-px h-3 bg-border-highlight mx-3 hidden sm:block"></div>
                    <div className="flex items-center gap-2 min-w-[100px]">
-                      <span className="text-zinc-600">发文机关</span>
-                      <span className="text-zinc-400">{policy.organ}</span>
+                      <span className="text-text-muted">发文机关</span>
+                      <span className="text-text-muted">{policy.organ}</span>
                    </div>
-                   <div className="w-px h-3 bg-zinc-800 mx-3 hidden sm:block"></div>
+                   <div className="w-px h-3 bg-border-highlight mx-3 hidden sm:block"></div>
                    <div className="flex items-center gap-2 min-w-[80px]">
-                      <span className="text-zinc-600">发文地区</span>
-                      <span className="text-zinc-400">{policy.region}</span>
+                      <span className="text-text-muted">发文地区</span>
+                      <span className="text-text-muted">{policy.region}</span>
                    </div>
-                   <div className="w-px h-3 bg-zinc-800 mx-3 hidden sm:block"></div>
+                   <div className="w-px h-3 bg-border-highlight mx-3 hidden sm:block"></div>
                    <div className="flex items-center gap-2 min-w-[80px]">
-                      <span className="text-zinc-600">政策类型</span>
-                      <span className="text-zinc-400">{policy.type}</span>
+                      <span className="text-text-muted">政策类型</span>
+                      <span className="text-text-muted">{policy.type}</span>
                    </div>
                 </div>
               </div>
 
               {/* Action Area */}
-              <div className="flex items-center gap-1 pl-4 border-l border-zinc-800 shrink-0">
+              <div className="flex items-center gap-1 pl-4 border-l border-border-highlight shrink-0">
                  <button 
                     onClick={(e) => { e.stopPropagation(); setSelectedPolicy(policy); }}
-                    className="p-2 text-zinc-500 hover:text-blue-400 hover:bg-blue-500/10 rounded-md transition-all hover:scale-110" 
+                    className="p-2 text-text-muted hover:text-blue-400 hover:bg-blue-500/10 rounded-md transition-all hover:scale-110" 
                     title="查看内容"
                  >
                     <FileText size={16} />
                  </button>
                  <button 
                     onClick={(e) => e.stopPropagation()} 
-                    className="p-2 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-md transition-all hover:scale-110" 
+                    className="p-2 text-text-muted hover:text-text-primary hover:bg-surface-highlight rounded-md transition-all hover:scale-110" 
                     title="下载"
                  >
                     <Download size={16} />
                  </button>
                  <button 
-                  className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-all hover:scale-110" 
+                  className="p-2 text-text-muted hover:text-red-400 hover:bg-red-500/10 rounded-md transition-all hover:scale-110" 
                   title="删除"
                   onClick={(e) => { e.stopPropagation(); if(window.confirm('确认删除该政策？')) { console.log('Deleted'); } }}
                  >
@@ -526,27 +526,27 @@ const ResourceView: React.FC = () => {
      <div key="ModelText" className="flex-1 flex flex-col h-full bg-background animate-fade-in">
        <div className="bg-surface border-b border-border p-4 shadow-sm flex items-center gap-4">
         <div className="relative flex-1">
-            <Search className="absolute left-3 top-2.5 text-zinc-500" size={16} />
-            <input type="text" placeholder="搜索范文..." className="w-full pl-9 py-2 bg-zinc-950 border border-border rounded-lg text-sm text-zinc-200 placeholder:text-zinc-600" />
+            <Search className="absolute left-3 top-2.5 text-text-muted" size={16} />
+            <input type="text" placeholder="搜索范文..." className="w-full pl-9 py-2 bg-background border border-border rounded-lg text-sm text-text-primary placeholder:text-text-muted" />
         </div>
         <div className="flex gap-2 text-sm">
             {['全部', '法定范文', '事务性范文', '我的收藏', '我的上传'].map(f => (
-                <button key={f} className="px-3 py-1.5 rounded-full border border-border hover:bg-zinc-800 text-zinc-400 transition-colors bg-zinc-900 hover:border-zinc-600">{f}</button>
+                <button key={f} className="px-3 py-1.5 rounded-full border border-border hover:bg-surface-highlight text-text-muted transition-colors bg-surface hover:border-text-muted hover:text-text-primary">{f}</button>
             ))}
         </div>
        </div>
        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto">
           {MOCK_MODEL_TEXTS.map(item => (
-              <div key={item.id} className="bg-surface p-5 rounded-xl border border-border shadow-sm hover:border-zinc-700 transition-all hover:-translate-y-1 duration-200">
+              <div key={item.id} className="bg-surface p-5 rounded-xl border border-border shadow-sm hover:border-border-highlight transition-all hover:-translate-y-1 duration-200">
                   <div className="flex justify-between mb-2">
-                      <h3 className="font-bold text-zinc-200">{item.title}</h3>
-                      <button className={item.isFavorite ? "text-yellow-500" : "text-zinc-600 hover:text-yellow-400 transition-colors"}>
+                      <h3 className="font-bold text-text-primary">{item.title}</h3>
+                      <button className={item.isFavorite ? "text-yellow-500" : "text-text-muted hover:text-yellow-400 transition-colors"}>
                           <Star size={18} fill={item.isFavorite ? "currentColor" : "none"} />
                       </button>
                   </div>
-                  <p className="text-sm text-zinc-400 mb-4 line-clamp-2">{item.abstract}</p>
-                  <div className="flex justify-between items-center text-xs text-zinc-600">
-                      <span className="bg-zinc-900 px-2 py-1 rounded">类型: {item.type}</span>
+                  <p className="text-sm text-text-muted mb-4 line-clamp-2">{item.abstract}</p>
+                  <div className="flex justify-between items-center text-xs text-text-muted">
+                      <span className="bg-surface-highlight px-2 py-1 rounded">类型: {item.type}</span>
                       <span>上传用户: {item.uploader}</span>
                   </div>
               </div>
@@ -583,15 +583,15 @@ const ResourceView: React.FC = () => {
     };
 
     const getCellClass = (r: number, c: number) => {
-      let classes = "border-b border-r border-zinc-800 p-2 text-zinc-300 cursor-cell select-none transition-colors ";
+      let classes = "border-b border-r border-border p-2 text-text-secondary cursor-cell select-none transition-colors ";
       
       // Header Style (Applied to the row)
       if (headerRow === r) {
-          classes += "bg-yellow-500/10 text-yellow-200 ";
+          classes += "bg-yellow-500/10 text-text-primary ";
       } 
       // Data Style (Applied to the row range)
       else if (dataRows && r >= dataRows.start && r <= dataRows.end) {
-          classes += "bg-green-500/5 text-green-100 ";
+          classes += "bg-green-500/10 text-text-primary ";
       }
 
       // Selection Highlight
@@ -602,7 +602,7 @@ const ResourceView: React.FC = () => {
           const maxC = Math.max(selection.start.c, selection.end.c);
           
           if (r >= minR && r <= maxR && c >= minC && c <= maxC) {
-              classes += "!bg-blue-600/30 "; // Use !important to override other bgs
+              classes += "!bg-blue-500/20 "; // Use !important to override other bgs
               if (r === minR) classes += "border-t-2 border-t-blue-500 ";
               if (c === minC) classes += "border-l-2 border-l-blue-500 ";
               if (r === maxR) classes += "border-b-2 border-b-blue-500 ";
@@ -699,24 +699,24 @@ const ResourceView: React.FC = () => {
             <div className="flex items-center gap-2">
                 <button 
                     onClick={() => { setIsExtracting(false); setSelectedIndicator(null); setExtractionStep('upload'); setSelection(null); setShowConfigPanel(false); }}
-                    className="flex items-center gap-1 text-sm text-zinc-400 hover:text-white transition-colors"
+                    className="flex items-center gap-1 text-sm text-text-muted hover:text-text-primary transition-colors"
                 >
                     <ArrowLeft size={16} /> 返回列表
                 </button>
-                <div className="w-px h-4 bg-zinc-700 mx-2"></div>
+                <div className="w-px h-4 bg-border-highlight mx-2"></div>
                 
                 {selectedIndicator ? (
                         <div className="flex items-center gap-2">
-                        <span className="text-zinc-500 text-sm font-medium">数据主题:</span>
+                        <span className="text-text-muted text-sm font-medium">数据主题:</span>
                         <input 
                             type="text" 
                             value={selectedIndicator.topic} 
                             onChange={(e) => setSelectedIndicator({...selectedIndicator, topic: e.target.value})}
-                            className="bg-zinc-900 border border-zinc-700 rounded px-2 py-1 text-zinc-200 font-bold focus:border-blue-500 outline-none w-64"
+                            className="bg-surface-highlight border border-border rounded px-2 py-1 text-text-primary font-bold focus:border-blue-500 outline-none w-64"
                         />
                         </div>
                 ) : (
-                    <h3 className="font-bold text-zinc-200">
+                    <h3 className="font-bold text-text-primary">
                         {showUpload ? '上传文件' : '文件预览 & 提取'}
                     </h3>
                 )}
@@ -733,24 +733,24 @@ const ResourceView: React.FC = () => {
         {/* Content */}
         {showUpload ? (
             <div className="flex-1 p-8 flex flex-col animate-slide-up">
-                 <div className="mb-6 flex items-center gap-2 text-sm text-zinc-400">
+                 <div className="mb-6 flex items-center gap-2 text-sm text-text-muted">
                      <span className="text-blue-500 font-bold border-l-4 border-blue-500 pl-2">上传文件</span>
                  </div>
                  
                  <div className="flex-1 flex flex-col">
                     <div 
-                        className="w-full border-2 border-dashed border-zinc-700 rounded-lg flex-1 flex flex-col items-center justify-center bg-zinc-900/30 hover:bg-zinc-900/50 transition-colors cursor-pointer group mb-6 relative"
+                        className="w-full border-2 border-dashed border-border rounded-lg flex-1 flex flex-col items-center justify-center bg-surface/30 hover:bg-surface/50 transition-colors cursor-pointer group mb-6 relative"
                         onClick={() => {
                             // Simulate file selection then go to next step
                              setExtractionStep('result'); 
                         }}
                     >
                         <input type="file" className="absolute inset-0 opacity-0 cursor-pointer z-10" />
-                        <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
-                            <Plus className="text-zinc-400" size={24} />
+                        <div className="w-12 h-12 rounded-full bg-surface-highlight flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                            <Plus className="text-text-muted" size={24} />
                         </div>
-                        <p className="text-base text-zinc-300 font-medium mb-1">拖拽或点击上传</p>
-                        <p className="text-zinc-500 text-xs">支持 xlsx、xls、csv，最大不超过50.0MB</p>
+                        <p className="text-base text-text-secondary font-medium mb-1">拖拽或点击上传</p>
+                        <p className="text-text-muted text-xs">支持 xlsx、xls、csv，最大不超过50.0MB</p>
                     </div>
                     
                     <div>
@@ -770,29 +770,29 @@ const ResourceView: React.FC = () => {
                     <div className="flex items-center justify-between mb-4">
                          {selectedIndicator ? (
                                 <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 rounded bg-purple-900/30 flex items-center justify-center text-purple-500">
+                                    <div className="w-8 h-8 rounded bg-purple-500/10 flex items-center justify-center text-purple-500">
                                         <BarChart2 size={18} />
                                     </div>
                                     <div>
-                                        <h4 className="text-sm font-bold text-zinc-200">{selectedIndicator.source}</h4>
-                                        <p className="text-xs text-zinc-500">最后修改: {selectedIndicator.modified}</p>
+                                        <h4 className="text-sm font-bold text-text-primary">{selectedIndicator.source}</h4>
+                                        <p className="text-xs text-text-muted">最后修改: {selectedIndicator.modified}</p>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 rounded bg-green-900/30 flex items-center justify-center text-green-500">
+                                    <div className="w-8 h-8 rounded bg-green-500/10 flex items-center justify-center text-green-500">
                                         <FileText size={18} />
                                     </div>
                                     <div>
-                                        <h4 className="text-sm font-bold text-zinc-200">2023年全国主要城市GDP数据.xlsx</h4>
-                                        <p className="text-xs text-zinc-500">12.5KB | 刚刚上传</p>
+                                        <h4 className="text-sm font-bold text-text-primary">2023年全国主要城市GDP数据.xlsx</h4>
+                                        <p className="text-xs text-text-muted">12.5KB | 刚刚上传</p>
                                     </div>
                                 </div>
                             )}
 
                         <div className="flex gap-2">
                             {selection ? (
-                                <div className="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700 animate-scale-in">
+                                <div className="flex items-center gap-2 bg-surface-highlight rounded-lg p-1 border border-border animate-scale-in">
                                     <button 
                                         onClick={handleSetHeader}
                                         className="px-3 py-1.5 text-xs bg-yellow-600/20 text-yellow-500 hover:bg-yellow-600/30 border border-yellow-600/30 rounded transition-colors flex items-center gap-1"
@@ -807,22 +807,22 @@ const ResourceView: React.FC = () => {
                                     </button>
                                     <button 
                                         onClick={() => setSelection(null)}
-                                        className="px-2 py-1.5 text-xs text-zinc-400 hover:text-white transition-colors"
+                                        className="px-2 py-1.5 text-xs text-text-muted hover:text-text-primary transition-colors"
                                     >
                                         <X size={14} />
                                     </button>
                                 </div>
                             ) : (
-                                <div className="flex items-center gap-4 text-xs text-zinc-500">
+                                <div className="flex items-center gap-4 text-xs text-text-muted">
                                     <span className="flex items-center gap-1"><div className="w-3 h-3 bg-yellow-500/20 border border-yellow-500/50 rounded-sm"></div> 表头区域</span>
                                     <span className="flex items-center gap-1"><div className="w-3 h-3 bg-green-500/20 border border-green-500/50 rounded-sm"></div> 数据区域</span>
                                 </div>
                             )}
-                            <div className="w-px h-6 bg-zinc-800 mx-2"></div>
+                            <div className="w-px h-6 bg-border-highlight mx-2"></div>
                             {headerRow !== null && !showConfigPanel && (
                                 <button 
                                     onClick={() => setShowConfigPanel(true)}
-                                    className="px-3 py-1.5 text-xs border border-zinc-700 text-zinc-300 rounded hover:bg-zinc-800 transition-colors flex items-center gap-1"
+                                    className="px-3 py-1.5 text-xs border border-border text-text-secondary rounded hover:bg-surface-highlight transition-colors flex items-center gap-1"
                                 >
                                     <Settings2 size={14} /> 配置字段
                                 </button>
@@ -838,18 +838,18 @@ const ResourceView: React.FC = () => {
 
                     <div className="flex-1 bg-surface border border-border rounded-xl overflow-hidden shadow-sm flex flex-col select-none relative">
                         {/* Sheet Tabs */}
-                        <div className="flex items-center bg-zinc-900 border-b border-border overflow-x-auto custom-scrollbar">
+                        <div className="flex items-center bg-surface-highlight border-b border-border overflow-x-auto custom-scrollbar">
                             {Object.keys(PREVIEW_EXCEL_SHEETS).map(sheetName => (
                                 <button
                                     key={sheetName}
                                     onClick={() => setActiveSheet(sheetName)}
-                                    className={`px-4 py-2 text-xs font-medium border-r border-zinc-800 transition-colors whitespace-nowrap flex items-center gap-2 ${
+                                    className={`px-4 py-2 text-xs font-medium border-r border-border transition-colors whitespace-nowrap flex items-center gap-2 ${
                                         activeSheet === sheetName 
                                         ? 'bg-surface text-blue-500 border-b-2 border-b-blue-500' 
-                                        : 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200'
+                                        : 'text-text-muted hover:bg-surface-highlight hover:text-text-primary'
                                     }`}
                                 >
-                                    <Table size={12} className={activeSheet === sheetName ? "text-blue-500" : "text-zinc-600"}/>
+                                    <Table size={12} className={activeSheet === sheetName ? "text-blue-500" : "text-text-muted"}/>
                                     {sheetName}
                                 </button>
                             ))}
@@ -864,11 +864,11 @@ const ResourceView: React.FC = () => {
                             )}
 
                             <table className="w-full text-left text-sm border-collapse" onMouseLeave={() => setIsSelecting(false)}>
-                                <thead className="bg-zinc-900 sticky top-0 z-10">
+                                <thead className="bg-surface-highlight sticky top-0 z-10">
                                     <tr>
-                                        <th className="w-12 border-b border-r border-zinc-800 p-2 text-center text-zinc-600 bg-zinc-900 font-mono text-xs select-none"></th>
+                                        <th className="w-12 border-b border-r border-border p-2 text-center text-text-muted bg-surface-highlight font-mono text-xs select-none"></th>
                                         {currentSheetData[0]?.map((header, i) => (
-                                            <th key={i} className="border-b border-r border-zinc-800 p-2 text-zinc-400 font-medium min-w-[100px] select-none bg-zinc-900">
+                                            <th key={i} className="border-b border-r border-border p-2 text-text-muted font-medium min-w-[100px] select-none bg-surface-highlight">
                                                 {String.fromCharCode(65 + i)}
                                             </th>
                                         ))}
@@ -877,7 +877,7 @@ const ResourceView: React.FC = () => {
                                 <tbody>
                                     {currentSheetData.map((row, rowIndex) => (
                                         <tr key={rowIndex}>
-                                            <td className="border-b border-r border-zinc-800 p-2 text-center text-zinc-600 bg-zinc-900/50 font-mono text-xs sticky left-0 select-none">
+                                            <td className="border-b border-r border-border p-2 text-center text-text-muted bg-surface-highlight/50 font-mono text-xs sticky left-0 select-none">
                                                 {rowIndex + 1}
                                             </td>
                                             {row.map((cell, cellIndex) => (
@@ -897,9 +897,9 @@ const ResourceView: React.FC = () => {
                         </div>
                         
                         {/* Excel-like Status Bar */}
-                        <div className="h-6 bg-zinc-900 border-t border-border flex items-center px-4 justify-between text-[10px] text-zinc-500">
+                        <div className="h-6 bg-surface-highlight border-t border-border flex items-center px-4 justify-between text-[10px] text-text-muted">
                             <div className="flex gap-4">
-                                <span className="flex items-center gap-1 text-zinc-400"><div className="w-1.5 h-1.5 rounded-full bg-green-500"></div> 就绪</span>
+                                <span className="flex items-center gap-1 text-text-muted"><div className="w-1.5 h-1.5 rounded-full bg-green-500"></div> 就绪</span>
                                 {selection && <span>选中: R{selection.start.r + 1}C{selection.start.c + 1} : R{selection.end.r + 1}C{selection.end.c + 1}</span>}
                             </div>
                             <div className="flex gap-4">
@@ -914,17 +914,17 @@ const ResourceView: React.FC = () => {
                 <div 
                     className={`bg-surface border-l border-border w-[350px] flex flex-col transition-all duration-300 transform ${showConfigPanel ? 'translate-x-0' : 'translate-x-full absolute right-0 h-full shadow-none border-none pointer-events-none'}`}
                 >
-                    <div className="p-4 border-b border-border flex justify-between items-center bg-zinc-900">
-                        <h3 className="font-bold text-zinc-200 flex items-center gap-2">
+                    <div className="p-4 border-b border-border flex justify-between items-center bg-surface-highlight">
+                        <h3 className="font-bold text-text-primary flex items-center gap-2">
                             <Settings2 size={16} className="text-blue-500" /> 字段配置
                         </h3>
-                        <button onClick={() => setShowConfigPanel(false)} className="text-zinc-500 hover:text-zinc-300">
+                        <button onClick={() => setShowConfigPanel(false)} className="text-text-muted hover:text-text-secondary">
                             <ChevronRight size={20} />
                         </button>
                     </div>
                     
                     {/* Panel Toolbar */}
-                    <div className="p-4 bg-zinc-900/50 border-b border-border space-y-3">
+                    <div className="p-4 bg-surface-highlight/50 border-b border-border space-y-3">
                          <div className="flex gap-2">
                              <button 
                                 onClick={handleAIGenerate}
@@ -944,7 +944,7 @@ const ResourceView: React.FC = () => {
                          
                          {/* Template Selector */}
                          <div className="relative group">
-                            <div className="flex items-center justify-between gap-2 bg-zinc-800 border border-zinc-700 rounded px-3 py-2 text-xs text-zinc-300 cursor-pointer hover:border-zinc-600">
+                            <div className="flex items-center justify-between gap-2 bg-surface-highlight border border-border rounded px-3 py-2 text-xs text-text-secondary cursor-pointer hover:border-text-muted">
                                 <span className="flex items-center gap-2"><LayoutTemplate size={14}/> 应用模版配置</span>
                                 <ChevronDown size={14}/>
                             </div>
@@ -953,7 +953,7 @@ const ResourceView: React.FC = () => {
                                     <button 
                                         key={tmpl.id}
                                         onClick={() => handleApplyTemplate(tmpl.id)}
-                                        className="w-full text-left px-3 py-2 text-xs text-zinc-300 hover:bg-zinc-800 transition-colors flex justify-between items-center"
+                                        className="w-full text-left px-3 py-2 text-xs text-text-secondary hover:bg-surface-highlight transition-colors flex justify-between items-center"
                                     >
                                         {tmpl.name}
                                         <ChevronRight size={12} className="opacity-50"/>
@@ -966,18 +966,18 @@ const ResourceView: React.FC = () => {
                     {/* Fields List */}
                     <div className="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4">
                         {columnConfigs.length === 0 ? (
-                            <div className="text-center text-zinc-500 py-10 text-sm">
+                            <div className="text-center text-text-muted py-10 text-sm">
                                 请先在左侧表格中选中一行<br/>并点击"设为表头"
                             </div>
                         ) : (
                             columnConfigs.map((col, idx) => (
-                                <div key={col.index} className="bg-zinc-900 border border-border rounded-lg p-3 animate-slide-up" style={{ animationDelay: `${idx * 50}ms` }}>
+                                <div key={col.index} className="bg-surface-highlight border border-border rounded-lg p-3 animate-slide-up" style={{ animationDelay: `${idx * 50}ms` }}>
                                     <div className="flex items-center justify-between mb-2">
                                         <div className="flex items-center gap-2 overflow-hidden">
-                                            <span className="w-5 h-5 flex items-center justify-center bg-zinc-800 rounded text-[10px] text-zinc-500 font-mono">
+                                            <span className="w-5 h-5 flex items-center justify-center bg-surface rounded text-[10px] text-text-muted font-mono">
                                                 {String.fromCharCode(65 + col.index)}
                                             </span>
-                                            <span className="text-sm font-bold text-zinc-200 truncate">{col.name}</span>
+                                            <span className="text-sm font-bold text-text-primary truncate">{col.name}</span>
                                         </div>
                                     </div>
                                     
@@ -986,14 +986,14 @@ const ResourceView: React.FC = () => {
                                             <input 
                                                 type="text" 
                                                 placeholder="字段描述"
-                                                className="w-full bg-zinc-950 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-300 focus:border-blue-500/50 focus:outline-none transition-colors"
+                                                className="w-full bg-background border border-border rounded px-2 py-1.5 text-xs text-text-secondary focus:border-blue-500/50 focus:outline-none transition-colors"
                                                 value={col.description}
                                                 onChange={(e) => updateColumnConfig(col.index, { description: e.target.value })}
                                             />
                                         </div>
                                         <div className="flex gap-2">
                                             <select 
-                                                className="flex-1 bg-zinc-950 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-300 focus:border-blue-500/50 focus:outline-none transition-colors"
+                                                className="flex-1 bg-background border border-border rounded px-2 py-1.5 text-xs text-text-secondary focus:border-blue-500/50 focus:outline-none transition-colors"
                                                 value={col.type}
                                                 onChange={(e) => updateColumnConfig(col.index, { type: e.target.value as any })}
                                             >
@@ -1003,7 +1003,7 @@ const ResourceView: React.FC = () => {
                                                 <option value="Boolean">布尔 (Boolean)</option>
                                             </select>
                                             <select 
-                                                className="flex-1 bg-zinc-950 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-300 focus:border-blue-500/50 focus:outline-none transition-colors"
+                                                className="flex-1 bg-background border border-border rounded px-2 py-1.5 text-xs text-text-secondary focus:border-blue-500/50 focus:outline-none transition-colors"
                                                 value={col.attribute}
                                                 onChange={(e) => updateColumnConfig(col.index, { attribute: e.target.value as any })}
                                             >
@@ -1019,9 +1019,9 @@ const ResourceView: React.FC = () => {
                 </div>
             </div>
         ) : (
-            <div className="flex-1 p-8 flex flex-col items-center justify-center text-zinc-500 animate-slide-up">
+            <div className="flex-1 p-8 flex flex-col items-center justify-center text-text-muted animate-slide-up">
                 <div className="w-full max-w-4xl bg-surface border border-border rounded-xl p-8 shadow-lg min-h-[500px]">
-                    <h2 className="text-xl font-bold text-zinc-200 mb-6 flex items-center gap-2">
+                    <h2 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-2">
                         <FileSearch className="text-blue-500" />
                         {selectedIndicator ? `提取指标: ${selectedIndicator.topic}` : '提取结果预览'}
                     </h2>
@@ -1029,22 +1029,22 @@ const ResourceView: React.FC = () => {
                     {/* Mock Extraction Process/Result */}
                     <div className="space-y-6">
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
-                                <h3 className="text-sm font-semibold text-zinc-400 mb-2">源文件</h3>
-                                <div className="h-40 bg-zinc-900 rounded border border-zinc-700/50 flex items-center justify-center">
-                                    <span className="text-zinc-600 text-sm">文档预览区域</span>
+                            <div className="p-4 bg-surface-highlight/50 rounded-lg border border-border">
+                                <h3 className="text-sm font-semibold text-text-muted mb-2">源文件</h3>
+                                <div className="h-40 bg-surface-highlight rounded border border-border-highlight flex items-center justify-center">
+                                    <span className="text-text-muted text-sm">文档预览区域</span>
                                 </div>
                             </div>
-                            <div className="p-4 bg-zinc-900/50 rounded-lg border border-zinc-800">
-                                <h3 className="text-sm font-semibold text-zinc-400 mb-2">提取结果</h3>
-                                <div className="h-40 bg-zinc-900 rounded border border-zinc-700/50 flex items-center justify-center">
-                                    <span className="text-zinc-600 text-sm">结构化数据预览</span>
+                            <div className="p-4 bg-surface-highlight/50 rounded-lg border border-border">
+                                <h3 className="text-sm font-semibold text-text-muted mb-2">提取结果</h3>
+                                <div className="h-40 bg-surface-highlight rounded border border-border-highlight flex items-center justify-center">
+                                    <span className="text-text-muted text-sm">结构化数据预览</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="flex justify-end gap-3 pt-4 border-t border-zinc-800">
-                            <button className="px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-800 rounded-md transition-colors" onClick={() => {setIsExtracting(false); setSelectedIndicator(null);}}>取消</button>
+                        <div className="flex justify-end gap-3 pt-4 border-t border-border">
+                            <button className="px-4 py-2 text-sm text-text-muted hover:bg-surface-highlight rounded-md transition-colors" onClick={() => {setIsExtracting(false); setSelectedIndicator(null);}}>取消</button>
                             <button className="px-4 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-colors shadow-lg shadow-blue-900/20">开始提取</button>
                         </div>
                     </div>
@@ -1062,9 +1062,9 @@ const ResourceView: React.FC = () => {
       <div key="Indicator" className="flex-1 flex flex-col h-full bg-background p-6 overflow-hidden animate-fade-in">
         <div className="bg-surface rounded-xl shadow-sm border border-border flex flex-col h-full">
             <div className="p-4 border-b border-border flex justify-between items-center">
-                <h3 className="font-semibold text-zinc-200">数据指标</h3>
+                <h3 className="font-semibold text-text-primary">数据指标</h3>
                 <div className="flex gap-2">
-                    <input type="text" placeholder="搜索主题..." className="border border-border bg-zinc-950 rounded-lg px-3 py-1.5 text-sm text-zinc-300 focus:outline-none focus:border-blue-500/50" />
+                    <input type="text" placeholder="搜索主题..." className="border border-border bg-background rounded-lg px-3 py-1.5 text-sm text-text-primary focus:outline-none focus:border-blue-500/50" />
                     <button 
                         onClick={() => { setIsExtracting(true); setExtractionStep('upload'); }}
                         className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30 ml-2"
@@ -1074,8 +1074,8 @@ const ResourceView: React.FC = () => {
                 </div>
             </div>
             <div className="flex-1 overflow-auto">
-                <table className="w-full text-left text-sm text-zinc-400">
-                    <thead className="bg-zinc-900/80 text-zinc-500 font-medium sticky top-0 z-10 backdrop-blur-md">
+                <table className="w-full text-left text-sm text-text-muted">
+                    <thead className="bg-surface-highlight/80 text-text-muted font-medium sticky top-0 z-10 backdrop-blur-md">
                         <tr>
                             <th className="px-6 py-3">数据来源</th>
                             <th className="px-6 py-3">数据主题</th>
@@ -1086,12 +1086,12 @@ const ResourceView: React.FC = () => {
                             <th className="px-6 py-3 text-right w-64">操作</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-zinc-800">
+                    <tbody className="divide-y divide-border">
                         {indicators.map(ind => (
-                            <tr key={ind.id} className="hover:bg-zinc-800/50 transition-colors group">
+                            <tr key={ind.id} className="hover:bg-surface-highlight/50 transition-colors group">
                                 <td className="px-6 py-3">{ind.source}</td>
                                 <td 
-                                    className="px-6 py-3 font-medium text-zinc-200 cursor-pointer hover:text-blue-400"
+                                    className="px-6 py-3 font-medium text-text-primary cursor-pointer hover:text-blue-400"
                                     onClick={() => openIndicatorDetail(ind)}
                                 >
                                     {ind.topic}
@@ -1099,7 +1099,7 @@ const ResourceView: React.FC = () => {
                                 <td className="px-6 py-3">{ind.modified}</td>
                                 <td className="px-6 py-3">{ind.creator}</td>
                                 <td className="px-6 py-3">
-                                    <span className="px-2 py-0.5 rounded bg-zinc-800 border border-zinc-700 text-xs text-zinc-400">
+                                    <span className="px-2 py-0.5 rounded bg-surface-highlight border border-border text-xs text-text-muted">
                                         {ind.type}
                                     </span>
                                 </td>
@@ -1108,11 +1108,11 @@ const ResourceView: React.FC = () => {
                                         {ind.status === '可用' && <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>}
                                         {ind.status === '提取中' && <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>}
                                         {ind.status === '失败' && <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>}
-                                        {ind.status === '禁用' && <div className="w-1.5 h-1.5 rounded-full bg-zinc-500"></div>}
+                                        {ind.status === '禁用' && <div className="w-1.5 h-1.5 rounded-full bg-text-muted"></div>}
                                         <span className={`text-xs ${
                                             ind.status === '可用' ? 'text-green-400' : 
                                             ind.status === '失败' ? 'text-red-400' :
-                                            ind.status === '提取中' ? 'text-blue-400' : 'text-zinc-500'
+                                            ind.status === '提取中' ? 'text-blue-400' : 'text-text-muted'
                                         }`}>{ind.status}</span>
                                     </div>
                                 </td>
@@ -1122,7 +1122,7 @@ const ResourceView: React.FC = () => {
                                         {(ind.status === '可用' || ind.status === '禁用') && (
                                             <button 
                                                 onClick={() => toggleIndicatorStatus(ind.id)}
-                                                className={`p-2 rounded-md transition-all hover:scale-110 ${ind.status === '可用' ? 'text-blue-500 hover:bg-blue-500/10' : 'text-zinc-500 hover:text-blue-500 hover:bg-zinc-800'}`}
+                                                className={`p-2 rounded-md transition-all hover:scale-110 ${ind.status === '可用' ? 'text-blue-500 hover:bg-blue-500/10' : 'text-text-muted hover:text-blue-500 hover:bg-surface-highlight'}`}
                                                 title={ind.status === '可用' ? '禁用' : '启用'}
                                             >
                                                 {ind.status === '可用' ? <ToggleRight size={16} /> : <ToggleLeft size={16} />}
@@ -1132,7 +1132,7 @@ const ResourceView: React.FC = () => {
                                         {/* Dynamic Main Action Button */}
                                         {ind.status === '失败' ? (
                                             <button 
-                                                className="p-2 text-zinc-500 hover:text-blue-400 hover:bg-blue-500/10 rounded-md transition-all hover:scale-110"
+                                                className="p-2 text-text-muted hover:text-blue-400 hover:bg-blue-500/10 rounded-md transition-all hover:scale-110"
                                                 title="重新提取"
                                                 onClick={() => setSelectedIndicator(ind)}
                                             >
@@ -1140,14 +1140,14 @@ const ResourceView: React.FC = () => {
                                             </button>
                                         ) : (ind.status === '可用' || ind.status === '禁用') ? (
                                             <button 
-                                                className="p-2 text-zinc-500 hover:text-blue-400 hover:bg-blue-500/10 rounded-md transition-all hover:scale-110"
+                                                className="p-2 text-text-muted hover:text-blue-400 hover:bg-blue-500/10 rounded-md transition-all hover:scale-110"
                                                 title="查看详情"
                                                 onClick={() => openIndicatorDetail(ind)}
                                             >
                                                 <FileText size={16} />
                                             </button>
                                         ) : (
-                                            <button className="p-2 text-zinc-500 cursor-wait" title="处理中">
+                                            <button className="p-2 text-text-muted cursor-wait" title="处理中">
                                                 <Loader2 size={16} className="animate-spin" />
                                             </button>
                                         )}
@@ -1155,14 +1155,14 @@ const ResourceView: React.FC = () => {
                                         {/* Data Analysis Button */}
                                         <button 
                                             disabled={ind.status === '失败' || ind.status === '提取中'}
-                                            className={`p-2 rounded-md transition-all hover:scale-110 ${ind.status === '失败' || ind.status === '提取中' ? 'text-zinc-700 cursor-not-allowed' : 'text-zinc-500 hover:text-purple-400 hover:bg-purple-500/10'}`}
+                                            className={`p-2 rounded-md transition-all hover:scale-110 ${ind.status === '失败' || ind.status === '提取中' ? 'text-text-muted cursor-not-allowed' : 'text-text-muted hover:text-purple-400 hover:bg-purple-500/10'}`}
                                             title="数据分析"
                                         >
                                             <BarChart2 size={16} />
                                         </button>
 
                                         {/* Delete Button */}
-                                        <button className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-all hover:scale-110" title="删除">
+                                        <button className="p-2 text-text-muted hover:text-red-400 hover:bg-red-500/10 rounded-md transition-all hover:scale-110" title="删除">
                                             <Trash2 size={16} />
                                         </button>
                                     </div>
@@ -1180,9 +1180,9 @@ const ResourceView: React.FC = () => {
   const renderMyLibraryContent = () => (
       <div key="MyLibrary" className="flex-1 p-6 bg-background overflow-y-auto animate-fade-in">
           <div className="bg-surface rounded-xl shadow-sm border border-border">
-            <div className="p-4 border-b border-border font-bold text-zinc-200">我的报告</div>
-            <table className="w-full text-left text-sm text-zinc-400">
-                    <thead className="bg-zinc-900">
+            <div className="p-4 border-b border-border font-bold text-text-primary">我的报告</div>
+            <table className="w-full text-left text-sm text-text-muted">
+                    <thead className="bg-surface-highlight">
                         <tr>
                             <th className="px-6 py-3">文章标题</th>
                             <th className="px-6 py-3">来源</th>
@@ -1190,9 +1190,9 @@ const ResourceView: React.FC = () => {
                             <th className="px-6 py-3 text-right">操作</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-zinc-800">
+                    <tbody className="divide-y divide-border">
                         {MOCK_REPORTS.map(rep => (
-                            <tr key={rep.id} className="hover:bg-zinc-800/50 transition-colors">
+                            <tr key={rep.id} className="hover:bg-surface-highlight/50 transition-colors">
                                 <td className="px-6 py-3 text-blue-500 cursor-pointer hover:underline">{rep.title}</td>
                                 <td className="px-6 py-3">{rep.source}</td>
                                 <td className="px-6 py-3">{rep.time}</td>
@@ -1213,13 +1213,13 @@ const ResourceView: React.FC = () => {
         <div className="flex items-center gap-6 px-6 pt-4 border-b border-border bg-surface/50">
            <button
              onClick={() => setCaseSubTab('Rights')}
-             className={`pb-3 text-sm font-medium transition-all border-b-2 ${caseSubTab === 'Rights' ? 'border-blue-500 text-blue-400' : 'border-transparent text-zinc-400 hover:text-zinc-200'}`}
+             className={`pb-3 text-sm font-medium transition-all border-b-2 ${caseSubTab === 'Rights' ? 'border-blue-500 text-blue-400' : 'border-transparent text-text-muted hover:text-text-primary'}`}
            >
              权责清单
            </button>
            <button
              onClick={() => setCaseSubTab('History')}
-             className={`pb-3 text-sm font-medium transition-all border-b-2 ${caseSubTab === 'History' ? 'border-blue-500 text-blue-400' : 'border-transparent text-zinc-400 hover:text-zinc-200'}`}
+             className={`pb-3 text-sm font-medium transition-all border-b-2 ${caseSubTab === 'History' ? 'border-blue-500 text-blue-400' : 'border-transparent text-text-muted hover:text-text-primary'}`}
            >
              过往案例
            </button>
@@ -1233,21 +1233,21 @@ const ResourceView: React.FC = () => {
                   <button className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white rounded text-xs font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/20">
                      <Plus size={14}/> 新增
                   </button>
-                  <button className="flex items-center gap-1.5 px-3 py-1.5 border border-zinc-700 text-zinc-300 rounded text-xs hover:bg-zinc-800 transition-colors">
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 border border-border text-text-secondary rounded text-xs hover:bg-surface-highlight transition-colors">
                      <Download size={14}/> 下载模板
                   </button>
-                  <button className="flex items-center gap-1.5 px-3 py-1.5 border border-zinc-700 text-zinc-300 rounded text-xs hover:bg-zinc-800 transition-colors">
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 border border-border text-text-secondary rounded text-xs hover:bg-surface-highlight transition-colors">
                      <Upload size={14}/> 导入
                   </button>
                </div>
                <div className="flex items-center gap-2">
-                  <div className="flex items-center bg-zinc-900 border border-zinc-700 rounded-md overflow-hidden">
-                     <div className="px-3 py-1.5 border-r border-zinc-700 text-xs text-zinc-400 bg-zinc-800/50 flex items-center gap-1 cursor-pointer hover:text-zinc-300">
+                  <div className="flex items-center bg-surface-highlight border border-border rounded-md overflow-hidden">
+                     <div className="px-3 py-1.5 border-r border-border text-xs text-text-muted bg-surface-highlight/50 flex items-center gap-1 cursor-pointer hover:text-text-secondary">
                         关键词 <ChevronDown size={12}/>
                      </div>
                      <div className="relative">
-                         <Search size={14} className="absolute left-2 top-2 text-zinc-500" />
-                         <input type="text" className="bg-transparent border-none text-xs text-zinc-200 pl-8 pr-3 py-1.5 w-48 focus:outline-none placeholder:text-zinc-600" placeholder="请输入"/>
+                         <Search size={14} className="absolute left-2 top-2 text-text-muted" />
+                         <input type="text" className="bg-transparent border-none text-xs text-text-primary pl-8 pr-3 py-1.5 w-48 focus:outline-none placeholder:text-text-muted" placeholder="请输入"/>
                      </div>
                   </div>
                </div>
@@ -1257,14 +1257,14 @@ const ResourceView: React.FC = () => {
             <div className="flex-1 overflow-auto px-4 pb-4">
                 <div className="border border-border rounded-lg overflow-hidden bg-surface shadow-sm">
                    <table className="w-full text-left text-xs">
-                      <thead className="bg-zinc-900/80 text-zinc-500 font-medium border-b border-border">
+                      <thead className="bg-surface-highlight/80 text-text-muted font-medium border-b border-border">
                          <tr>
-                            <th className="p-3 w-10"><input type="checkbox" className="rounded bg-zinc-800 border-zinc-700 focus:ring-1 focus:ring-blue-500"/></th>
+                            <th className="p-3 w-10"><input type="checkbox" className="rounded bg-surface-highlight border-border focus:ring-1 focus:ring-blue-500"/></th>
                             <th className="p-3 w-12">序号</th>
                             <th className="p-3 w-24">创建人</th>
                             <th className="p-3 min-w-[200px]">事项名称</th>
                             <th className="p-3 w-24">
-                                <div className="flex items-center gap-1 cursor-pointer hover:text-zinc-300">
+                                <div className="flex items-center gap-1 cursor-pointer hover:text-text-secondary">
                                     权力类型 <Filter size={10}/>
                                 </div>
                             </th>
@@ -1275,18 +1275,18 @@ const ResourceView: React.FC = () => {
                             <th className="p-3 w-32 text-center">操作</th>
                          </tr>
                       </thead>
-                      <tbody className="divide-y divide-border text-zinc-300">
+                      <tbody className="divide-y divide-border text-text-secondary">
                          {RIGHTS_LIST.map((row) => (
-                            <tr key={row.id} className="hover:bg-zinc-800/50 transition-colors">
-                               <td className="p-3"><input type="checkbox" className="rounded bg-zinc-800 border-zinc-700 focus:ring-1 focus:ring-blue-500"/></td>
-                               <td className="p-3 text-zinc-500">{row.id}</td>
+                            <tr key={row.id} className="hover:bg-surface-highlight/50 transition-colors">
+                               <td className="p-3"><input type="checkbox" className="rounded bg-surface-highlight border-border focus:ring-1 focus:ring-blue-500"/></td>
+                               <td className="p-3 text-text-muted">{row.id}</td>
                                <td className="p-3">{row.creator}</td>
                                <td className="p-3 text-blue-400 cursor-pointer hover:underline truncate max-w-[200px]" title={row.name}>{row.name}</td>
                                <td className="p-3">{row.type}</td>
-                               <td className="p-3 truncate max-w-[200px] text-zinc-400" title={row.basis}>{row.basis}</td>
-                               <td className="p-3 truncate max-w-[150px] text-zinc-400" title={row.subject}>{row.subject}</td>
-                               <td className="p-3 truncate max-w-[200px] text-zinc-400" title={row.content}>{row.content}</td>
-                               <td className="p-3 truncate max-w-[200px] text-zinc-400" title={row.accountability}>{row.accountability}</td>
+                               <td className="p-3 truncate max-w-[200px] text-text-muted" title={row.basis}>{row.basis}</td>
+                               <td className="p-3 truncate max-w-[150px] text-text-muted" title={row.subject}>{row.subject}</td>
+                               <td className="p-3 truncate max-w-[200px] text-text-muted" title={row.content}>{row.content}</td>
+                               <td className="p-3 truncate max-w-[200px] text-text-muted" title={row.accountability}>{row.accountability}</td>
                                <td className="p-3 text-center">
                                    <div className="flex items-center justify-center gap-2">
                                       <button className="text-blue-500 hover:text-blue-400">查看</button>
@@ -1302,36 +1302,36 @@ const ResourceView: React.FC = () => {
             </div>
 
             {/* Footer */}
-            <div className="h-12 border-t border-border bg-surface px-4 flex items-center justify-between text-xs text-zinc-500 shrink-0">
+            <div className="h-12 border-t border-border bg-surface px-4 flex items-center justify-between text-xs text-text-muted shrink-0">
                <div className="flex items-center gap-4">
                   <span>已选 0 条</span>
-                  <button className="px-3 py-1 bg-zinc-800 text-zinc-300 border border-zinc-700 rounded hover:bg-zinc-700 transition-colors">导出Excel</button>
-                  <button className="px-3 py-1 bg-zinc-800 text-zinc-300 border border-zinc-700 rounded hover:bg-zinc-700 transition-colors">批量删除</button>
+                  <button className="px-3 py-1 bg-surface-highlight text-text-secondary border border-border rounded hover:bg-border-highlight transition-colors">导出Excel</button>
+                  <button className="px-3 py-1 bg-surface-highlight text-text-secondary border border-border rounded hover:bg-border-highlight transition-colors">批量删除</button>
                </div>
                {/* Pagination (Simplified) */}
                <div className="flex items-center gap-2">
                   <span>共 10 条</span>
-                  <button className="w-6 h-6 border border-border rounded flex items-center justify-center hover:bg-zinc-800 disabled:opacity-50 transition-colors" disabled>&lt;</button>
+                  <button className="w-6 h-6 border border-border rounded flex items-center justify-center hover:bg-surface-highlight disabled:opacity-50 transition-colors" disabled>&lt;</button>
                   <button className="w-6 h-6 bg-blue-600 text-white rounded flex items-center justify-center">1</button>
-                  <button className="w-6 h-6 border border-border rounded flex items-center justify-center hover:bg-zinc-800 disabled:opacity-50 transition-colors" disabled>&gt;</button>
+                  <button className="w-6 h-6 border border-border rounded flex items-center justify-center hover:bg-surface-highlight disabled:opacity-50 transition-colors" disabled>&gt;</button>
                </div>
             </div>
         </>
         ) : (
-            <div className="flex-1 p-6 flex flex-col items-center justify-center text-zinc-500">
-                <Folder size={48} className="mb-4 text-zinc-700 animate-bounce" />
-                <h3 className="text-lg font-medium text-zinc-300">过往案例库</h3>
-                <p className="max-w-md mt-2 text-zinc-600 text-center">此处展示过往处理的历史案例归档。</p>
+            <div className="flex-1 p-6 flex flex-col items-center justify-center text-text-muted">
+                <Folder size={48} className="mb-4 text-text-muted animate-bounce" />
+                <h3 className="text-lg font-medium text-text-secondary">过往案例库</h3>
+                <p className="max-w-md mt-2 text-text-muted text-center">此处展示过往处理的历史案例归档。</p>
                  <div className="mt-8 grid grid-cols-2 gap-6 w-full max-w-2xl">
-                    <div className="bg-surface p-6 rounded-xl shadow-sm border border-border hover:border-zinc-600 transition-all hover:scale-105 duration-200">
-                        <h4 className="font-bold text-zinc-200 mb-2">2023年案例</h4>
-                        <p className="text-xs text-zinc-500">归档 54 个案例</p>
+                    <div className="bg-surface p-6 rounded-xl shadow-sm border border-border hover:border-border-highlight transition-all hover:scale-105 duration-200">
+                        <h4 className="font-bold text-text-primary mb-2">2023年案例</h4>
+                        <p className="text-xs text-text-muted">归档 54 个案例</p>
                     </div>
-                    <div className="bg-surface p-6 rounded-xl shadow-sm border border-border hover:border-zinc-600 transition-all hover:scale-105 duration-200">
-                        <h4 className="font-bold text-zinc-200 mb-2">2022年案例</h4>
-                        <p className="text-xs text-zinc-500">归档 35 个案例</p>
+                    <div className="bg-surface p-6 rounded-xl shadow-sm border border-border hover:border-border-highlight transition-all hover:scale-105 duration-200">
+                        <h4 className="font-bold text-text-primary mb-2">2022年案例</h4>
+                        <p className="text-xs text-text-muted">归档 35 个案例</p>
                     </div>
-                </div>
+                 </div>
             </div>
         )}
      </div>

@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  /* Light Theme Default */
+  --color-background-val: #ffffff;
+  --color-surface-val: #f4f4f5;
+  --color-surface-highlight-val: #e4e4e7;
+  --color-border-val: #e4e4e7;
+  --color-border-highlight-val: #d4d4d8;
+  --color-text-primary-val: #18181b;
+  --color-text-secondary-val: #52525b;
+  --color-text-muted-val: #71717a;
+}
+
+:root[class~="dark"] {
+  /* Dark Theme */
+  --color-background-val: #09090b;
+  --color-surface-val: #18181b;
+  --color-surface-highlight-val: #27272a;
+  --color-border-val: #27272a;
+  --color-border-highlight-val: #3f3f46;
+  --color-text-primary-val: #e4e4e7;
+  --color-text-secondary-val: #a1a1aa;
+  --color-text-muted-val: #71717a;
+}
+
+@theme {
+  --color-background: var(--color-background-val);
+  --color-surface: var(--color-surface-val);
+  --color-surface-highlight: var(--color-surface-highlight-val);
+  --color-border: var(--color-border-val);
+  --color-border-highlight: var(--color-border-highlight-val);
+  
+  --color-primary: #3b82f6;
+  
+  --color-text-primary: var(--color-text-primary-val);
+  --color-text-secondary: var(--color-text-secondary-val);
+  --color-text-muted: var(--color-text-muted-val);
+
+  --animate-fade-in: fadeIn 0.3s ease-out forwards;
+  --animate-slide-up: slideUp 0.4s ease-out forwards;
+  --animate-slide-in-right: slideInRight 0.3s ease-out forwards;
+  --animate-scale-in: scaleIn 0.2s ease-out forwards;
+  --animate-grow-x: growX 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes growX {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+}

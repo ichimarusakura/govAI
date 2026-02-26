@@ -262,7 +262,7 @@ const AgentView: React.FC = () => {
   };
 
   const renderConfigView = () => (
-      <div className="flex h-full w-full bg-background text-zinc-200 animate-fade-in">
+      <div className="flex h-full w-full bg-background text-text-primary animate-fade-in">
           {/* Config Sidebar */}
           <div 
             className={`flex flex-col border-r border-border bg-surface/30 shrink-0 transition-all duration-300 ease-in-out ${
@@ -274,15 +274,15 @@ const AgentView: React.FC = () => {
                       <Plus size={16} /> 新增问答助手
                   </button>
               </div>
-              <div className="px-4 py-2 text-xs font-medium text-zinc-500">问答助手列表</div>
+              <div className="px-4 py-2 text-xs font-medium text-text-muted">问答助手列表</div>
               <div className="flex-1 overflow-y-auto px-2 space-y-1">
                   {MOCK_AGENTS_LIST.map(agent => (
-                      <div key={agent.id} className={`flex items-center justify-between p-3 rounded-lg cursor-pointer group transition-colors ${agent.active ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'hover:bg-zinc-800 text-zinc-300 border border-transparent'}`}>
+                      <div key={agent.id} className={`flex items-center justify-between p-3 rounded-lg cursor-pointer group transition-colors ${agent.active ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'hover:bg-surface-highlight text-text-secondary border border-transparent'}`}>
                           <div className="flex items-center gap-3 overflow-hidden">
                               <Bot size={18} />
                               <span className="truncate text-sm font-medium">{agent.name}</span>
                           </div>
-                          <button className="text-zinc-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button className="text-text-muted hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
                               <Trash2 size={14} />
                           </button>
                       </div>
@@ -296,19 +296,19 @@ const AgentView: React.FC = () => {
               <div className="h-14 border-b border-border flex items-center px-4 gap-2 bg-surface/30 shrink-0">
                   <button 
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
+                    className="p-2 text-text-secondary hover:text-text-primary hover:bg-surface-highlight rounded-lg transition-colors"
                     title={isSidebarOpen ? "收起侧边栏" : "展开侧边栏"}
                   >
                       {isSidebarOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
                   </button>
-                  <div className="w-px h-4 bg-zinc-700 mx-2"></div>
+                  <div className="w-px h-4 bg-border-highlight mx-2"></div>
                   <button 
                     onClick={() => setViewMode('chat')}
-                    className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
+                    className="p-2 text-text-secondary hover:text-text-primary hover:bg-surface-highlight rounded-lg transition-colors"
                   >
                       <ArrowLeft size={20} />
                   </button>
-                  <h2 className="font-bold text-zinc-200 ml-2">配置智能体</h2>
+                  <h2 className="font-bold text-text-primary ml-2">配置智能体</h2>
               </div>
 
               <div className="flex-1 overflow-y-auto p-8 animate-slide-up">
@@ -316,114 +316,114 @@ const AgentView: React.FC = () => {
                   <div className="max-w-3xl mx-auto space-y-8 pb-20">
                       {/* Assistant Name */}
                       <div className="flex gap-4 items-start">
-                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-zinc-400"><span className="text-red-500 mr-1">*</span>助手名称:</label>
+                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-text-secondary"><span className="text-red-500 mr-1">*</span>助手名称:</label>
                           <div className="flex-1 relative">
                               <input 
                                   type="text" 
                                   value={configForm.name}
                                   onChange={e => setConfigForm({...configForm, name: e.target.value})}
-                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-zinc-200 focus:outline-none focus:border-blue-500 transition-colors"
+                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500 transition-colors"
                                   placeholder="请输入助手名称"
                                   maxLength={50}
                               />
-                              <span className="absolute right-3 top-2.5 text-xs text-zinc-500">{configForm.name.length} / 50</span>
+                              <span className="absolute right-3 top-2.5 text-xs text-text-muted">{configForm.name.length} / 50</span>
                           </div>
                       </div>
 
                       {/* Description */}
                       <div className="flex gap-4 items-start">
-                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-zinc-400">助手描述:</label>
+                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-text-secondary">助手描述:</label>
                           <div className="flex-1 relative">
                               <textarea 
                                   value={configForm.desc}
                                   onChange={e => setConfigForm({...configForm, desc: e.target.value})}
-                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-zinc-200 focus:outline-none focus:border-blue-500 transition-colors resize-none h-24 custom-scrollbar"
+                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500 transition-colors resize-none h-24 custom-scrollbar"
                                   placeholder="请输入助手的介绍"
                                   maxLength={2000}
                               />
-                              <span className="absolute right-3 bottom-2 text-xs text-zinc-500">{configForm.desc.length} / 2000</span>
+                              <span className="absolute right-3 bottom-2 text-xs text-text-muted">{configForm.desc.length} / 2000</span>
                           </div>
                       </div>
 
                       {/* Instructions */}
                       <div className="flex gap-4 items-start">
-                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-zinc-400 flex items-center justify-end gap-1">
+                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-text-secondary flex items-center justify-end gap-1">
                               助手提示词
-                              <Info size={12} className="text-zinc-500" />:
+                              <Info size={12} className="text-text-muted" />:
                           </label>
                           <div className="flex-1 relative">
                               <textarea 
                                   value={configForm.instructions}
                                   onChange={e => setConfigForm({...configForm, instructions: e.target.value})}
-                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-zinc-200 focus:outline-none focus:border-blue-500 transition-colors resize-none h-32 custom-scrollbar"
+                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500 transition-colors resize-none h-32 custom-scrollbar"
                                   placeholder="请输入助手提示词"
                                   maxLength={2000}
                               />
-                              <span className="absolute right-3 bottom-2 text-xs text-zinc-500">{configForm.instructions.length} / 2000</span>
+                              <span className="absolute right-3 bottom-2 text-xs text-text-muted">{configForm.instructions.length} / 2000</span>
                           </div>
                       </div>
 
                       {/* Opening */}
                       <div className="flex gap-4 items-start">
-                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-zinc-400">助手开场白:</label>
+                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-text-secondary">助手开场白:</label>
                           <div className="flex-1 relative">
                               <textarea 
                                   value={configForm.opening}
                                   onChange={e => setConfigForm({...configForm, opening: e.target.value})}
-                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-zinc-200 focus:outline-none focus:border-blue-500 transition-colors resize-none h-24 custom-scrollbar"
+                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500 transition-colors resize-none h-24 custom-scrollbar"
                                   placeholder="请输入助手的开场白"
                                   maxLength={2000}
                               />
-                              <span className="absolute right-3 bottom-2 text-xs text-zinc-500">{configForm.opening.length} / 2000</span>
+                              <span className="absolute right-3 bottom-2 text-xs text-text-muted">{configForm.opening.length} / 2000</span>
                           </div>
                       </div>
 
                       {/* Empty Response */}
                       <div className="flex gap-4 items-start">
-                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-zinc-400">空回复:</label>
+                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-text-secondary">空回复:</label>
                           <div className="flex-1 relative">
                               <textarea 
                                   value={configForm.emptyResp}
                                   onChange={e => setConfigForm({...configForm, emptyResp: e.target.value})}
-                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-zinc-200 focus:outline-none focus:border-blue-500 transition-colors resize-none h-24 custom-scrollbar"
+                                  className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500 transition-colors resize-none h-24 custom-scrollbar"
                                   placeholder="当没有检索到有用的知识时，你想让大模型怎么回复？如果不填，则让大模型自由发挥进行回复"
                                   maxLength={2000}
                               />
-                              <span className="absolute right-3 bottom-2 text-xs text-zinc-500">{configForm.emptyResp.length} / 2000</span>
+                              <span className="absolute right-3 bottom-2 text-xs text-text-muted">{configForm.emptyResp.length} / 2000</span>
                           </div>
                       </div>
 
                       {/* QA Params */}
                       <div className="flex gap-4 items-center">
-                          <label className="w-24 text-right text-sm font-medium text-zinc-400">问答参数:</label>
+                          <label className="w-24 text-right text-sm font-medium text-text-secondary">问答参数:</label>
                           <div className="flex-1">
                               <div className="relative w-full">
-                                <select className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-zinc-200 focus:outline-none focus:border-blue-500 transition-colors appearance-none cursor-pointer">
+                                <select className="w-full bg-surface border border-border rounded-lg px-4 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500 transition-colors appearance-none cursor-pointer">
                                     <option>请选择</option>
                                     <option>精确匹配</option>
                                     <option>模糊匹配</option>
                                 </select>
-                                <ChevronDown size={16} className="absolute right-3 top-2.5 text-zinc-500 pointer-events-none" />
+                                <ChevronDown size={16} className="absolute right-3 top-2.5 text-text-muted pointer-events-none" />
                               </div>
                           </div>
                       </div>
 
                       {/* Toggles */}
                       <div className="flex gap-4 items-center">
-                          <label className="w-24 text-right text-sm font-medium text-zinc-400">深度思考:</label>
+                          <label className="w-24 text-right text-sm font-medium text-text-secondary">深度思考:</label>
                           <button 
                             onClick={() => setConfigForm({...configForm, deepThinking: !configForm.deepThinking})}
-                            className={`w-11 h-6 rounded-full relative transition-colors duration-200 ${configForm.deepThinking ? 'bg-blue-600' : 'bg-zinc-700'}`}
+                            className={`w-11 h-6 rounded-full relative transition-colors duration-200 ${configForm.deepThinking ? 'bg-blue-600' : 'bg-border-highlight'}`}
                           >
                               <div className={`w-4 h-4 rounded-full bg-white absolute top-1 left-1 transition-transform duration-200 ${configForm.deepThinking ? 'translate-x-5' : 'translate-x-0'}`}></div>
                           </button>
                       </div>
 
                       <div className="flex gap-4 items-center">
-                          <label className="w-24 text-right text-sm font-medium text-zinc-400">支持多轮对话:</label>
+                          <label className="w-24 text-right text-sm font-medium text-text-secondary">支持多轮对话:</label>
                           <button 
                             onClick={() => setConfigForm({...configForm, multiTurn: !configForm.multiTurn})}
-                            className={`w-11 h-6 rounded-full relative transition-colors duration-200 ${configForm.multiTurn ? 'bg-blue-600' : 'bg-zinc-700'}`}
+                            className={`w-11 h-6 rounded-full relative transition-colors duration-200 ${configForm.multiTurn ? 'bg-blue-600' : 'bg-border-highlight'}`}
                           >
                               <div className={`w-4 h-4 rounded-full bg-white absolute top-1 left-1 transition-transform duration-200 ${configForm.multiTurn ? 'translate-x-5' : 'translate-x-0'}`}></div>
                           </button>
@@ -431,19 +431,19 @@ const AgentView: React.FC = () => {
 
                       {/* Knowledge Base */}
                       <div className="flex gap-4 items-start">
-                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-zinc-400"><span className="text-red-500 mr-1">*</span>知识库配置:</label>
+                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-text-secondary"><span className="text-red-500 mr-1">*</span>知识库配置:</label>
                           <div className="flex-1 space-y-1">
                               <div className="relative w-full">
                                 <select 
                                     value={configForm.kb}
                                     onChange={e => setConfigForm({...configForm, kb: e.target.value})}
-                                    className={`w-full bg-surface border rounded-lg px-4 py-2 text-sm text-zinc-200 focus:outline-none focus:border-blue-500 transition-colors appearance-none cursor-pointer ${!configForm.kb ? 'border-red-500/50' : 'border-border'}`}
+                                    className={`w-full bg-surface border rounded-lg px-4 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500 transition-colors appearance-none cursor-pointer ${!configForm.kb ? 'border-red-500/50' : 'border-border'}`}
                                 >
                                     <option value="">请选择知识库</option>
                                     <option value="kb1">纺织行业政策库</option>
                                     <option value="kb2">企业合规知识库</option>
                                 </select>
-                                <ChevronDown size={16} className="absolute right-3 top-2.5 text-zinc-500 pointer-events-none" />
+                                <ChevronDown size={16} className="absolute right-3 top-2.5 text-text-muted pointer-events-none" />
                               </div>
                               {!configForm.kb && <div className="text-xs text-red-500 pl-1">请选择知识库</div>}
                           </div>
@@ -451,19 +451,19 @@ const AgentView: React.FC = () => {
 
                       {/* Role Config */}
                       <div className="flex gap-4 items-start">
-                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-zinc-400"><span className="text-red-500 mr-1">*</span>角色配置:</label>
+                          <label className="w-24 pt-2.5 text-right text-sm font-medium text-text-secondary"><span className="text-red-500 mr-1">*</span>角色配置:</label>
                           <div className="flex-1 space-y-1">
                               <div className="relative w-full">
                                 <select 
                                     value={configForm.role}
                                     onChange={e => setConfigForm({...configForm, role: e.target.value})}
-                                    className={`w-full bg-surface border rounded-lg px-4 py-2 text-sm text-zinc-200 focus:outline-none focus:border-blue-500 transition-colors appearance-none cursor-pointer ${!configForm.role ? 'border-red-500/50' : 'border-border'}`}
+                                    className={`w-full bg-surface border rounded-lg px-4 py-2 text-sm text-text-primary focus:outline-none focus:border-blue-500 transition-colors appearance-none cursor-pointer ${!configForm.role ? 'border-red-500/50' : 'border-border'}`}
                                 >
                                     <option value="">请选择角色</option>
                                     <option value="role1">政策分析专员</option>
                                     <option value="role2">法律顾问</option>
                                 </select>
-                                <ChevronDown size={16} className="absolute right-3 top-2.5 text-zinc-500 pointer-events-none" />
+                                <ChevronDown size={16} className="absolute right-3 top-2.5 text-text-muted pointer-events-none" />
                               </div>
                               {!configForm.role && <div className="text-xs text-red-500 pl-1">请选择角色</div>}
                           </div>
@@ -471,7 +471,7 @@ const AgentView: React.FC = () => {
 
                        {/* Status */}
                        <div className="flex gap-4 items-center">
-                          <label className="w-24 text-right text-sm font-medium text-zinc-400">助手状态:</label>
+                          <label className="w-24 text-right text-sm font-medium text-text-secondary">助手状态:</label>
                           <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/10 border border-green-500/20 text-green-400 text-xs rounded">
                                <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
                                已上线
@@ -483,10 +483,10 @@ const AgentView: React.FC = () => {
                           <button className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-blue-900/20 hover:scale-105 transform duration-200">
                               保存
                           </button>
-                          <button className="px-6 py-2 bg-surface border border-border hover:bg-zinc-800 text-zinc-300 rounded-lg text-sm font-medium transition-colors hover:border-zinc-500">
+                          <button className="px-6 py-2 bg-surface border border-border hover:bg-surface-highlight text-text-secondary rounded-lg text-sm font-medium transition-colors hover:border-text-muted">
                               上线
                           </button>
-                          <button className="px-6 py-2 bg-surface border border-border hover:bg-zinc-800 text-zinc-300 rounded-lg text-sm font-medium transition-colors hover:border-zinc-500">
+                          <button className="px-6 py-2 bg-surface border border-border hover:bg-surface-highlight text-text-secondary rounded-lg text-sm font-medium transition-colors hover:border-text-muted">
                               下线
                           </button>
                       </div>
@@ -501,7 +501,7 @@ const AgentView: React.FC = () => {
     : sessions.filter(s => s.agentType === agentFilter);
 
   const renderChatView = () => (
-      <div className="flex h-full bg-background text-zinc-200">
+      <div className="flex h-full bg-background text-text-primary">
           {/* Sidebar - Floating Cards Style */}
           <div 
             className={`flex flex-col border-r border-border/50 bg-background/50 shrink-0 transition-all duration-300 ease-in-out ${
@@ -517,7 +517,7 @@ const AgentView: React.FC = () => {
                       setInput('');
                       setActiveSessionId(null);
                   }}
-                  className="w-full bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl py-3 px-4 flex items-center justify-center gap-2 transition-all border border-zinc-700 font-medium shadow-sm hover:scale-[1.02]"
+                  className="w-full bg-surface-highlight hover:bg-border-highlight text-white rounded-xl py-3 px-4 flex items-center justify-center gap-2 transition-all border border-border-highlight font-medium shadow-sm hover:scale-[1.02]"
                 >
                     <Plus size={18} /> 新建对话
                 </button>
@@ -525,15 +525,15 @@ const AgentView: React.FC = () => {
                 {/* Search & Filter */}
                 <div className="flex gap-2">
                     <div className="relative group/filter shrink-0">
-                        <div className="flex items-center justify-center w-10 h-10 bg-zinc-800 border border-zinc-700 rounded-lg cursor-pointer hover:bg-zinc-700 transition-colors">
-                            <Filter size={16} className={agentFilter !== '全部' ? 'text-blue-500' : 'text-zinc-500'} />
+                        <div className="flex items-center justify-center w-10 h-10 bg-surface-highlight border border-border-highlight rounded-lg cursor-pointer hover:bg-border-highlight transition-colors">
+                            <Filter size={16} className={agentFilter !== '全部' ? 'text-blue-500' : 'text-text-muted'} />
                         </div>
                         {/* Filter Dropdown */}
                         <div className="absolute top-full left-0 mt-2 w-48 bg-surface border border-border rounded-lg shadow-xl overflow-hidden max-h-64 overflow-y-auto custom-scrollbar z-30 opacity-0 invisible group-hover/filter:opacity-100 group-hover/filter:visible transition-all duration-200 transform origin-top-left flex flex-col">
-                            <div className="p-2 border-b border-zinc-800 text-xs text-zinc-500 font-medium">智能体筛选</div>
+                            <div className="p-2 border-b border-border-highlight text-xs text-text-muted font-medium">智能体筛选</div>
                             <button 
                                 onClick={() => setAgentFilter('全部')} 
-                                className={`w-full text-left px-3 py-2 text-xs hover:bg-zinc-800 transition-colors ${agentFilter === '全部' ? 'text-blue-500 bg-blue-500/10' : 'text-zinc-300'}`}
+                                className={`w-full text-left px-3 py-2 text-xs hover:bg-surface-highlight transition-colors ${agentFilter === '全部' ? 'text-blue-500 bg-blue-500/10' : 'text-text-secondary'}`}
                             >
                                 全部
                             </button>
@@ -541,7 +541,7 @@ const AgentView: React.FC = () => {
                                 <button 
                                     key={type} 
                                     onClick={() => setAgentFilter(type)} 
-                                    className={`w-full text-left px-3 py-2 text-xs hover:bg-zinc-800 transition-colors flex items-center gap-2 ${agentFilter === type ? 'text-blue-500 bg-blue-500/10' : 'text-zinc-300'}`}
+                                    className={`w-full text-left px-3 py-2 text-xs hover:bg-surface-highlight transition-colors flex items-center gap-2 ${agentFilter === type ? 'text-blue-500 bg-blue-500/10' : 'text-text-secondary'}`}
                                 >
                                     {AGENT_ICONS[type]}
                                     <span className="truncate">{type}</span>
@@ -550,47 +550,47 @@ const AgentView: React.FC = () => {
                         </div>
                     </div>
                     <div className="relative group flex-1">
-                        <Search className="absolute left-3 top-2.5 text-zinc-500 group-focus-within:text-zinc-300 transition-colors" size={16} />
+                        <Search className="absolute left-3 top-2.5 text-text-muted group-focus-within:text-text-secondary transition-colors" size={16} />
                         <input 
                             type="text" 
                             placeholder="搜索..." 
-                            className="w-full pl-9 pr-3 py-2 bg-transparent border border-zinc-800 rounded-lg text-sm text-zinc-300 focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-zinc-600"
+                            className="w-full pl-9 pr-3 py-2 bg-transparent border border-border-highlight rounded-lg text-sm text-text-secondary focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-text-muted"
                         />
                     </div>
                 </div>
             </div>
             
             <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-3 custom-scrollbar">
-              <div className="px-1 text-xs font-semibold text-zinc-500 uppercase tracking-wider">最近</div>
+              <div className="px-1 text-xs font-semibold text-text-muted uppercase tracking-wider">最近</div>
               {filteredSessions.map(session => (
                 <div 
                     key={session.id} 
                     onClick={() => handleSessionClick(session)}
                     className={`p-3 border rounded-xl shadow-sm cursor-pointer flex items-start gap-3 transition-all group hover:translate-x-1 duration-200 relative ${
                         activeSessionId === session.id 
-                        ? 'bg-zinc-800 border-zinc-600' 
-                        : 'bg-surface border-border hover:border-zinc-600'
+                        ? 'bg-surface-highlight border-border-highlight' 
+                        : 'bg-surface border-border hover:border-border-highlight'
                     }`}
                 >
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
                       activeSessionId === session.id 
                       ? 'bg-blue-600/20 text-blue-500' 
-                      : 'bg-zinc-800 text-zinc-500 group-hover:bg-blue-600/10 group-hover:text-blue-500'
+                      : 'bg-surface-highlight text-text-muted group-hover:bg-blue-600/10 group-hover:text-blue-500'
                   }`}>
                      {AGENT_ICONS[session.agentType as string] || <MessageSquare size={16} />}
                   </div>
                   <div className="overflow-hidden flex-1">
                     <div className="flex justify-between items-start">
-                        <div className={`text-sm font-medium truncate pr-6 transition-colors ${activeSessionId === session.id ? 'text-blue-400' : 'text-zinc-200 group-hover:text-blue-400'}`}>
+                        <div className={`text-sm font-medium truncate pr-6 transition-colors ${activeSessionId === session.id ? 'text-blue-400' : 'text-text-primary group-hover:text-blue-400'}`}>
                             {session.title}
                         </div>
-                        <span className="text-[10px] text-zinc-600 shrink-0 mt-0.5 group-hover:opacity-0 transition-opacity absolute right-3">
+                        <span className="text-[10px] text-text-muted shrink-0 mt-0.5 group-hover:opacity-0 transition-opacity absolute right-3">
                             {session.updatedAt > new Date(Date.now() - 86400000) ? '今天' : 
                              session.updatedAt > new Date(Date.now() - 172800000) ? '昨天' : 
                              `${session.updatedAt.getMonth() + 1}/${session.updatedAt.getDate()}`}
                         </span>
                     </div>
-                    <div className="text-xs text-zinc-500 truncate mt-1 group-hover:text-zinc-400">{session.lastMessage}</div>
+                    <div className="text-xs text-text-muted truncate mt-1 group-hover:text-text-secondary">{session.lastMessage}</div>
                   </div>
                   
                   {/* Delete Button */}
@@ -599,7 +599,7 @@ const AgentView: React.FC = () => {
                         e.stopPropagation();
                         setSessionToDelete(session.id);
                     }}
-                    className="absolute right-2 top-2 p-1.5 text-zinc-500 hover:text-red-400 hover:bg-zinc-700/50 rounded-md opacity-0 group-hover:opacity-100 transition-all z-10"
+                    className="absolute right-2 top-2 p-1.5 text-text-muted hover:text-red-400 hover:bg-border-highlight/50 rounded-md opacity-0 group-hover:opacity-100 transition-all z-10"
                     title="删除对话"
                   >
                       <Trash2 size={14} />
@@ -607,14 +607,14 @@ const AgentView: React.FC = () => {
                 </div>
               ))}
               
-               <div className="px-1 text-xs font-semibold text-zinc-500 uppercase tracking-wider mt-6">更早</div>
+               <div className="px-1 text-xs font-semibold text-text-muted uppercase tracking-wider mt-6">更早</div>
                <div className="p-3 bg-surface border border-border rounded-xl shadow-sm opacity-60 hover:opacity-100 transition-all cursor-pointer flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center shrink-0 text-zinc-500">
+                  <div className="w-8 h-8 rounded-lg bg-surface-highlight flex items-center justify-center shrink-0 text-text-muted">
                      <MessageSquare size={16} />
                   </div>
                   <div className="overflow-hidden flex-1">
-                    <div className="text-sm font-medium text-zinc-200 truncate">年度总结报告大纲</div>
-                    <div className="text-xs text-zinc-500 truncate mt-1">请帮我列出2023年度...</div>
+                    <div className="text-sm font-medium text-text-primary truncate">年度总结报告大纲</div>
+                    <div className="text-xs text-text-muted truncate mt-1">请帮我列出2023年度...</div>
                   </div>
                 </div>
             </div>
@@ -628,7 +628,7 @@ const AgentView: React.FC = () => {
                  {/* Collapse/Expand Sidebar */}
                  <button 
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    className="pointer-events-auto p-2 bg-surface/50 backdrop-blur-md border border-border/50 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors shadow-sm"
+                    className="pointer-events-auto p-2 bg-surface/50 backdrop-blur-md border border-border/50 text-text-secondary hover:text-text-primary hover:bg-surface-highlight rounded-lg transition-colors shadow-sm"
                     title={isSidebarOpen ? "收起侧边栏" : "展开侧边栏"}
                  >
                      {isSidebarOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
@@ -643,7 +643,7 @@ const AgentView: React.FC = () => {
                           setInput('');
                           setActiveSessionId(null);
                       }}
-                      className="pointer-events-auto p-2 bg-surface/50 backdrop-blur-md border border-border/50 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors shadow-sm"
+                      className="pointer-events-auto p-2 bg-surface/50 backdrop-blur-md border border-border/50 text-text-secondary hover:text-text-primary hover:bg-surface-highlight rounded-lg transition-colors shadow-sm"
                       title="新建对话"
                     >
                         <Plus size={18} />
@@ -654,7 +654,7 @@ const AgentView: React.FC = () => {
                  {!selectedSkill && (
                      <button 
                         onClick={() => setViewMode('config')}
-                        className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 bg-surface/50 backdrop-blur-md border border-border/50 text-zinc-200 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors text-xs font-medium shadow-sm hover:scale-105 duration-200"
+                        className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 bg-surface/50 backdrop-blur-md border border-border/50 text-text-primary hover:text-text-primary hover:bg-surface-highlight rounded-lg transition-colors text-xs font-medium shadow-sm hover:scale-105 duration-200"
                      >
                          <UserPlus size={16} className="text-blue-500"/>
                          <span>创建智能体</span>
@@ -667,7 +667,7 @@ const AgentView: React.FC = () => {
               {messages.length === 0 ? (
                  <div className="h-full flex flex-col items-center justify-center p-8 overflow-y-auto custom-scrollbar animate-fade-in">
                      <div className="w-full max-w-4xl flex flex-col items-center">
-                        <h2 className="text-4xl font-bold text-white mb-8 tracking-tight mt-10 animate-slide-up text-center">
+                        <h2 className="text-4xl font-bold text-text-primary mb-8 tracking-tight mt-10 animate-slide-up text-center">
                             {selectedSkill ? selectedSkill.desc : "下午好，小市"}
                         </h2>
                         
@@ -676,22 +676,22 @@ const AgentView: React.FC = () => {
                             {/* Agent Selector Inside Input - New Dropdown Style */}
                             <div className="absolute top-4 left-4 z-20 flex gap-4">
                                 {selectedSkill ? (
-                                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800 border border-zinc-700 animate-scale-in">
+                                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-highlight border border-border-highlight animate-scale-in">
                                         <span className="text-blue-500">{selectedSkill.icon}</span>
-                                        <span className="text-sm font-medium text-zinc-200">{selectedSkill.name}</span>
+                                        <span className="text-sm font-medium text-text-primary">{selectedSkill.name}</span>
                                         <button 
                                            onClick={(e) => { e.stopPropagation(); setSelectedSkill(null); }}
-                                           className="ml-1 text-zinc-500 hover:text-white transition-colors p-0.5 rounded-full hover:bg-zinc-700"
+                                           className="ml-1 text-text-muted hover:text-text-primary transition-colors p-0.5 rounded-full hover:bg-border-highlight"
                                         >
                                             <X size={14} />
                                         </button>
                                     </div>
                                 ) : (
                                     <div className="relative group/agent-select">
-                                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800 border border-zinc-700 hover:border-blue-500/50 hover:bg-zinc-700 transition-all cursor-pointer">
+                                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-highlight border border-border-highlight hover:border-blue-500/50 hover:bg-border-highlight transition-all cursor-pointer">
                                             <span className="text-blue-500">{AGENT_ICONS[currentAgent.type || AgentType.ContentQuery]}</span>
-                                            <span className="text-xs font-medium text-zinc-200">{currentAgent.name}</span>
-                                            <ChevronDown size={12} className="text-zinc-500 group-hover/agent-select:rotate-180 transition-transform"/>
+                                            <span className="text-xs font-medium text-text-primary">{currentAgent.name}</span>
+                                            <ChevronDown size={12} className="text-text-muted group-hover/agent-select:rotate-180 transition-transform"/>
                                         </div>
                                         
                                         {/* Dropdown Menu */}
@@ -700,7 +700,7 @@ const AgentView: React.FC = () => {
                                                 <button 
                                                     key={agent.id} 
                                                     onClick={() => setActiveAgentId(agent.id)}
-                                                    className={`flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-zinc-800 transition-colors ${activeAgentId === agent.id ? 'text-blue-500 bg-blue-500/10' : 'text-zinc-300'}`}
+                                                    className={`flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-surface-highlight transition-colors ${activeAgentId === agent.id ? 'text-blue-500 bg-blue-500/10' : 'text-text-secondary'}`}
                                                 >
                                                     {AGENT_ICONS[agent.type] || <Bot size={14} />}
                                                     <span className="truncate">{agent.name}</span>
@@ -715,13 +715,13 @@ const AgentView: React.FC = () => {
                                     <div className="flex items-center gap-2 animate-fade-in">
                                         <button 
                                             onClick={handleSmartDraft}
-                                            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors border ${contractMode === 'smart' ? 'bg-blue-600 text-white border-blue-500' : 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'}`}
+                                            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors border ${contractMode === 'smart' ? 'bg-blue-600 text-white border-blue-500' : 'bg-surface-highlight text-text-secondary border-border-highlight hover:bg-border-highlight'}`}
                                         >
                                             智能起草
                                         </button>
                                         <button 
                                             onClick={() => handleTemplateDraft('框架协议')}
-                                            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors border ${contractMode === 'template' ? 'bg-blue-600 text-white border-blue-500' : 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'}`}
+                                            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors border ${contractMode === 'template' ? 'bg-blue-600 text-white border-blue-500' : 'bg-surface-highlight text-text-secondary border-border-highlight hover:bg-border-highlight'}`}
                                         >
                                             模板起草
                                         </button>
@@ -733,7 +733,7 @@ const AgentView: React.FC = () => {
                                     <div className="flex items-center gap-2 animate-fade-in">
                                         <button 
                                             onClick={() => setIsPolicyModalOpen(true)}
-                                            className="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700 flex items-center gap-1"
+                                            className="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border bg-surface-highlight text-text-secondary border-border-highlight hover:bg-border-highlight flex items-center gap-1"
                                         >
                                             <FileText size={12} />
                                             选择政策 ({selectedPolicies.length})
@@ -744,19 +744,19 @@ const AgentView: React.FC = () => {
 
                              {/* Template Select Overlay for Template Draft Mode */}
                              {selectedSkill?.name === AgentType.ContractGen && contractMode === 'template' && (
-                                <div className="absolute top-14 right-4 z-20 flex items-center gap-2 bg-zinc-800/80 backdrop-blur p-1 rounded-lg border border-zinc-700 animate-slide-in-right">
-                                    <span className="text-xs text-zinc-400 pl-2">选择模板:</span>
+                                <div className="absolute top-14 right-4 z-20 flex items-center gap-2 bg-surface-highlight/80 backdrop-blur p-1 rounded-lg border border-border-highlight animate-slide-in-right">
+                                    <span className="text-xs text-text-secondary pl-2">选择模板:</span>
                                     <div className="relative">
                                         <select 
                                             value={contractTemplateType}
                                             onChange={(e) => handleTemplateDraft(e.target.value)}
-                                            className="appearance-none bg-zinc-900 border border-zinc-600 rounded text-xs text-zinc-200 py-1 pl-2 pr-6 focus:outline-none focus:border-blue-500 cursor-pointer hover:bg-zinc-800 transition-colors"
+                                            className="appearance-none bg-background border border-border-highlight rounded text-xs text-text-primary py-1 pl-2 pr-6 focus:outline-none focus:border-blue-500 cursor-pointer hover:bg-surface-highlight transition-colors"
                                         >
                                             <option value="框架协议">框架协议</option>
                                             <option value="投资协议">投资协议</option>
                                             <option value="电商补贴协议">电商补贴协议</option>
                                         </select>
-                                        <ChevronDown size={12} className="absolute right-2 top-1.5 text-zinc-500 pointer-events-none" />
+                                        <ChevronDown size={12} className="absolute right-2 top-1.5 text-text-muted pointer-events-none" />
                                     </div>
                                 </div>
                             )}
@@ -788,18 +788,18 @@ const AgentView: React.FC = () => {
                                 }
                             }}
                             placeholder="想问点什么？"
-                            className={`w-full bg-transparent text-white text-lg placeholder:text-zinc-600 border-none focus:ring-0 resize-none h-full outline-none font-mono ${selectedSkill?.name === AgentType.PolicyDeduction && selectedPolicies.length > 0 ? 'pt-20' : 'pt-10'}`}
+                            className={`w-full bg-transparent text-text-primary text-lg placeholder:text-text-muted border-none focus:ring-0 resize-none h-full outline-none font-mono ${selectedSkill?.name === AgentType.PolicyDeduction && selectedPolicies.length > 0 ? 'pt-20' : 'pt-10'}`}
                             />
                             <div className="flex justify-between items-center pt-2">
                                 <div className="flex items-center gap-3">
-                                    <button className="text-zinc-500 hover:text-zinc-300 transition-colors p-1.5 hover:bg-zinc-800 rounded-lg hover:scale-110">
+                                    <button className="text-text-muted hover:text-text-secondary transition-colors p-1.5 hover:bg-surface-highlight rounded-lg hover:scale-110">
                                         <Paperclip size={18} />
                                     </button>
-                                    <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800 transition-colors text-xs font-medium border border-border hover:scale-105">
+                                    <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-highlight/50 text-text-secondary hover:bg-surface-highlight transition-colors text-xs font-medium border border-border hover:scale-105">
                                         <Sparkles size={14} />
                                         深度思考
                                     </button>
-                                    <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800 transition-colors text-xs font-medium border border-border hover:scale-105">
+                                    <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-highlight/50 text-text-secondary hover:bg-surface-highlight transition-colors text-xs font-medium border border-border hover:scale-105">
                                         <Search size={14} />
                                         联网搜索
                                     </button>
@@ -808,7 +808,7 @@ const AgentView: React.FC = () => {
                                     <button 
                                         onClick={handleSend}
                                         disabled={!input.trim()}
-                                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${input.trim() ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-900/20 hover:scale-105' : 'bg-zinc-800 text-zinc-600 cursor-not-allowed'}`}
+                                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${input.trim() ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-900/20 hover:scale-105' : 'bg-surface-highlight text-text-muted cursor-not-allowed'}`}
                                     >
                                         <ArrowUp size={18} strokeWidth={2.5} />
                                     </button>
@@ -824,12 +824,12 @@ const AgentView: React.FC = () => {
                                     <button 
                                         key={i} 
                                         onClick={() => setSelectedSkill(skill)}
-                                        className="flex items-center gap-2 px-5 py-3 bg-surface border border-border rounded-full hover:bg-zinc-800 hover:border-zinc-700 transition-all group shadow-sm hover:shadow-md hover:scale-105 duration-200"
+                                        className="flex items-center gap-2 px-5 py-3 bg-surface border border-border rounded-full hover:bg-surface-highlight hover:border-border-highlight transition-all group shadow-sm hover:shadow-md hover:scale-105 duration-200"
                                     >
                                         <div className="group-hover:scale-110 transition-transform duration-200">
                                             {skill.icon}
                                         </div>
-                                        <span className="text-sm font-medium text-zinc-300">{skill.name}</span>
+                                        <span className="text-sm font-medium text-text-secondary">{skill.name}</span>
                                     </button>
                                 ))}
                                 </div>
@@ -841,10 +841,10 @@ const AgentView: React.FC = () => {
                 <div className="max-w-4xl mx-auto flex flex-col gap-6 p-4 pt-24 pb-32">
                     {messages.map((msg, idx) => (
                     <div key={idx} className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''} animate-slide-up`}>
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'model' ? 'bg-gradient-to-tr from-blue-600 to-indigo-600 text-white' : 'bg-zinc-700 text-zinc-300'}`}>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'model' ? 'bg-gradient-to-tr from-blue-600 to-indigo-600 text-white' : 'bg-border-highlight text-text-secondary'}`}>
                         {msg.role === 'model' ? <Bot size={18} /> : <UserCheck size={18} />}
                         </div>
-                        <div className={`max-w-[80%] rounded-2xl p-4 shadow-md ${msg.role === 'model' ? 'bg-transparent text-zinc-200' : 'bg-zinc-800 text-white'}`}>
+                        <div className={`max-w-[80%] rounded-2xl p-4 shadow-md ${msg.role === 'model' ? 'bg-transparent text-text-primary' : 'bg-surface-highlight text-text-primary'}`}>
                             <p className="whitespace-pre-wrap leading-relaxed text-sm">{msg.text}</p>
                         </div>
                     </div>
@@ -874,19 +874,19 @@ const AgentView: React.FC = () => {
                          {/* Agent Selector Pill Floating Input - New Dropdown Style */}
                          <div className="flex items-center gap-2 px-4 pt-2 flex-wrap">
                             <div className="relative inline-block group/agent-select">
-                                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800 border border-zinc-700 hover:border-blue-500/50 transition-all cursor-pointer">
+                                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-highlight border border-border-highlight hover:border-blue-500/50 transition-all cursor-pointer">
                                     {selectedSkill ? (
                                         <>
                                             <span className="text-blue-500">{selectedSkill.icon}</span>
-                                            <span className="text-xs font-medium text-zinc-300">{selectedSkill.name}</span>
+                                            <span className="text-xs font-medium text-text-secondary">{selectedSkill.name}</span>
                                         </>
                                     ) : (
                                         <>
                                             <span className="text-blue-500">{AGENT_ICONS[currentAgent.type || AgentType.ContentQuery]}</span>
-                                            <span className="text-xs font-medium text-zinc-300">{currentAgent.name}</span>
+                                            <span className="text-xs font-medium text-text-secondary">{currentAgent.name}</span>
                                         </>
                                     )}
-                                    <ChevronDown size={12} className="text-zinc-500 group-hover/agent-select:rotate-180 transition-transform" />
+                                    <ChevronDown size={12} className="text-text-muted group-hover/agent-select:rotate-180 transition-transform" />
                                 </div>
                                 
                                 <div className="absolute bottom-full left-0 mb-1 w-48 bg-surface border border-border rounded-lg shadow-xl overflow-hidden max-h-60 overflow-y-auto custom-scrollbar opacity-0 invisible group-hover/agent-select:opacity-100 group-hover/agent-select:visible transition-all duration-200 transform origin-bottom-left flex flex-col">
@@ -894,7 +894,7 @@ const AgentView: React.FC = () => {
                                         <button 
                                             key={agent.id} 
                                             onClick={() => { setActiveAgentId(agent.id); setSelectedSkill(null); }}
-                                            className={`flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-zinc-800 transition-colors ${activeAgentId === agent.id && !selectedSkill ? 'text-blue-500 bg-blue-500/10' : 'text-zinc-300'}`}
+                                            className={`flex items-center gap-2 w-full text-left px-3 py-2 text-xs hover:bg-surface-highlight transition-colors ${activeAgentId === agent.id && !selectedSkill ? 'text-blue-500 bg-blue-500/10' : 'text-text-secondary'}`}
                                         >
                                             {AGENT_ICONS[agent.type] || <Bot size={14} />}
                                             <span className="truncate">{agent.name}</span>
@@ -907,7 +907,7 @@ const AgentView: React.FC = () => {
                              {selectedSkill?.name === AgentType.PolicyDeduction && (
                                 <button 
                                     onClick={() => setIsPolicyModalOpen(true)}
-                                    className="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700 flex items-center gap-1"
+                                    className="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border bg-surface-highlight text-text-secondary border-border-highlight hover:bg-border-highlight flex items-center gap-1"
                                 >
                                     <FileText size={12} />
                                     选择政策 ({selectedPolicies.length})
@@ -937,29 +937,29 @@ const AgentView: React.FC = () => {
                             }
                         }}
                         placeholder={`...`}
-                        className="w-full bg-transparent text-white rounded-xl pl-4 pr-12 py-2 focus:outline-none resize-none h-[48px] placeholder:text-zinc-600 font-mono"
+                        className="w-full bg-transparent text-text-primary rounded-xl pl-4 pr-12 py-2 focus:outline-none resize-none h-[48px] placeholder:text-text-muted font-mono"
                         />
                         
                         <div className="flex justify-between items-center px-2 pb-1 pt-1">
-                            <div className="flex items-center gap-2 text-zinc-500">
-                                <button className="p-2 hover:bg-zinc-800 rounded-full transition-colors hover:text-zinc-300 hover:scale-110" title="深度思考">
+                            <div className="flex items-center gap-2 text-text-muted">
+                                <button className="p-2 hover:bg-surface-highlight rounded-full transition-colors hover:text-text-primary hover:scale-110" title="深度思考">
                                     <Sparkles size={16} />
                                 </button>
-                                <button className="p-2 hover:bg-zinc-800 rounded-full transition-colors hover:text-zinc-300 hover:scale-110" title="上传图片">
+                                <button className="p-2 hover:bg-surface-highlight rounded-full transition-colors hover:text-text-primary hover:scale-110" title="上传图片">
                                     <ImageIcon size={16} />
                                 </button>
                             </div>
                             <button 
                                 onClick={handleSend}
                                 disabled={isLoading || !input.trim()}
-                                className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:bg-zinc-700 disabled:text-zinc-500 transition-all flex items-center justify-center shadow-lg shadow-blue-900/30 hover:scale-105"
+                                className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:bg-surface-highlight disabled:text-text-muted transition-all flex items-center justify-center shadow-lg shadow-blue-900/30 hover:scale-105"
                             >
                                 <Send size={16} />
                             </button>
                         </div>
                     </div>
                     <div className="text-center mt-3">
-                        <p className="text-xs text-zinc-600">内容由 AI 生成，请仔细甄别</p>
+                        <p className="text-xs text-text-muted">内容由 AI 生成，请仔细甄别</p>
                     </div>
                 </div>
                 </div>
@@ -970,17 +970,17 @@ const AgentView: React.FC = () => {
           {isPolicyModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in">
                     <div className="bg-surface rounded-xl shadow-2xl w-[600px] max-h-[80vh] flex flex-col border border-border animate-scale-in">
-                        <div className="p-4 border-b border-border flex justify-between items-center bg-zinc-900">
-                            <h3 className="font-semibold text-zinc-100 flex items-center gap-2">
+                        <div className="p-4 border-b border-border flex justify-between items-center bg-surface-highlight">
+                            <h3 className="font-semibold text-text-primary flex items-center gap-2">
                                 <BookOpen size={18} className="text-blue-500"/>
                                 政策库内容
                             </h3>
-                            <button onClick={() => setIsPolicyModalOpen(false)}><X size={20} className="text-zinc-500 hover:text-white"/></button>
+                            <button onClick={() => setIsPolicyModalOpen(false)}><X size={20} className="text-text-muted hover:text-text-primary"/></button>
                         </div>
-                        <div className="p-4 border-b border-border bg-zinc-900/50">
+                        <div className="p-4 border-b border-border bg-surface-highlight/50">
                              <div className="relative">
-                                <Search className="absolute left-3 top-2.5 text-zinc-500" size={16} />
-                                <input type="text" placeholder="搜索政策标题..." className="w-full pl-9 pr-3 py-2 bg-zinc-950 border border-border rounded-lg text-sm text-zinc-200 focus:outline-none focus:border-blue-500/50" />
+                                <Search className="absolute left-3 top-2.5 text-text-muted" size={16} />
+                                <input type="text" placeholder="搜索政策标题..." className="w-full pl-9 pr-3 py-2 bg-background border border-border rounded-lg text-sm text-text-primary focus:outline-none focus:border-blue-500/50" />
                              </div>
                         </div>
                         <div className="flex-1 overflow-y-auto p-2">
@@ -993,24 +993,24 @@ const AgentView: React.FC = () => {
                                             if (isSelected) setSelectedPolicies(prev => prev.filter(p => p.id !== policy.id));
                                             else setSelectedPolicies(prev => [...prev, policy]);
                                         }}
-                                        className={`p-3 rounded-lg border mb-2 cursor-pointer transition-all flex items-center justify-between group ${isSelected ? 'bg-blue-600/10 border-blue-500/50' : 'bg-surface border-border hover:border-zinc-600'}`}
+                                        className={`p-3 rounded-lg border mb-2 cursor-pointer transition-all flex items-center justify-between group ${isSelected ? 'bg-blue-600/10 border-blue-500/50' : 'bg-surface border-border hover:border-border-highlight'}`}
                                     >
                                         <div className="flex-1 min-w-0">
-                                            <div className={`font-medium text-sm truncate ${isSelected ? 'text-blue-400' : 'text-zinc-200'}`}>{policy.title}</div>
-                                            <div className="text-xs text-zinc-500 mt-1 flex gap-3">
+                                            <div className={`font-medium text-sm truncate ${isSelected ? 'text-blue-400' : 'text-text-primary'}`}>{policy.title}</div>
+                                            <div className="text-xs text-text-muted mt-1 flex gap-3">
                                                 <span>{policy.organ}</span>
                                                 <span>{policy.date}</span>
                                             </div>
                                         </div>
-                                        <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${isSelected ? 'bg-blue-500 border-blue-500' : 'border-zinc-600 group-hover:border-zinc-400'}`}>
+                                        <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${isSelected ? 'bg-blue-500 border-blue-500' : 'border-border-highlight group-hover:border-text-muted'}`}>
                                             {isSelected && <CheckCircle2 size={12} className="text-white"/>}
                                         </div>
                                     </div>
                                 )
                             })}
                         </div>
-                        <div className="p-4 border-t border-border bg-zinc-900 flex justify-between items-center">
-                            <span className="text-sm text-zinc-500">已选 {selectedPolicies.length} 项</span>
+                        <div className="p-4 border-t border-border bg-surface-highlight flex justify-between items-center">
+                            <span className="text-sm text-text-muted">已选 {selectedPolicies.length} 项</span>
                             <button onClick={() => setIsPolicyModalOpen(false)} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
                                 确认引用
                             </button>
@@ -1026,14 +1026,14 @@ const AgentView: React.FC = () => {
                         <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mb-4">
                             <Trash2 size={24} className="text-red-500" />
                         </div>
-                        <h3 className="text-lg font-bold text-zinc-100 mb-2">确认删除对话？</h3>
-                        <p className="text-sm text-zinc-400 mb-6">
+                        <h3 className="text-lg font-bold text-text-primary mb-2">确认删除对话？</h3>
+                        <p className="text-sm text-text-muted mb-6">
                             删除后，该对话记录将无法恢复。
                         </p>
                         <div className="flex gap-3 w-full">
                             <button 
                                 onClick={() => setSessionToDelete(null)}
-                                className="flex-1 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-sm font-medium transition-colors border border-zinc-700"
+                                className="flex-1 px-4 py-2 bg-surface hover:bg-surface-highlight text-text-secondary rounded-lg text-sm font-medium transition-colors border border-border"
                             >
                                 取消
                             </button>
