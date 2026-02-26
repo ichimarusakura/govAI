@@ -47,20 +47,29 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     // Load saved settings
-    const savedKey = localStorage.getItem('gemini_api_key');
-    const savedUrl = localStorage.getItem('gemini_base_url');
-    const savedTheme = localStorage.getItem('app_theme') || 'zinc';
-    
-    if (savedKey) setApiKey(savedKey);
-    if (savedUrl) setApiBaseUrl(savedUrl);
-    setCurrentTheme(savedTheme);
+    try {
+        const savedKey = localStorage.getItem('gemini_api_key');
+        const savedUrl = localStorage.getItem('gemini_base_url');
+        const savedTheme = localStorage.getItem('app_theme') || 'zinc';
+        
+        if (savedKey) setApiKey(savedKey);
+        if (savedUrl) setApiBaseUrl(savedUrl);
+        setCurrentTheme(savedTheme);
+    } catch (e) {
+        console.warn('Failed to load settings from localStorage', e);
+    }
   }, [isOpen]);
 
   const handleSaveApi = () => {
-    localStorage.setItem('gemini_api_key', apiKey);
-    localStorage.setItem('gemini_base_url', apiBaseUrl);
-    // Trigger a reload or event to update the service
-    window.location.reload(); 
+    try {
+        localStorage.setItem('gemini_api_key', apiKey);
+        localStorage.setItem('gemini_base_url', apiBaseUrl);
+        // Notify user or update state instead of reloading
+        alert('配置已保存，请刷新页面以应用更改');
+    } catch (e) {
+        console.error('Failed to save settings', e);
+        alert('保存失败，请检查浏览器设置');
+    }
   };
 
   const handleThemeChange = (themeId: string) => {

@@ -48,19 +48,23 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // Initialize theme
-    const savedThemeId = localStorage.getItem('app_theme') || 'zinc';
-    const theme = THEMES.find(t => t.id === savedThemeId);
-    if (theme) {
-        const root = document.documentElement;
-        root.style.setProperty('--color-primary', theme.primary);
-        root.style.setProperty('--color-background', theme.background);
-        root.style.setProperty('--color-surface', theme.surface);
-        root.style.setProperty('--color-surface-highlight', theme.surfaceHighlight);
-        root.style.setProperty('--color-border', theme.border);
-        root.style.setProperty('--color-border-highlight', theme.borderHighlight);
-        root.style.setProperty('--color-text-primary', theme.textPrimary);
-        root.style.setProperty('--color-text-secondary', theme.textSecondary);
-        root.style.setProperty('--color-text-muted', theme.textMuted);
+    try {
+        const savedThemeId = localStorage.getItem('app_theme') || 'zinc';
+        const theme = THEMES.find(t => t.id === savedThemeId);
+        if (theme) {
+            const root = document.documentElement;
+            root.style.setProperty('--color-primary', theme.primary);
+            root.style.setProperty('--color-background', theme.background);
+            root.style.setProperty('--color-surface', theme.surface);
+            root.style.setProperty('--color-surface-highlight', theme.surfaceHighlight);
+            root.style.setProperty('--color-border', theme.border);
+            root.style.setProperty('--color-border-highlight', theme.borderHighlight);
+            root.style.setProperty('--color-text-primary', theme.textPrimary);
+            root.style.setProperty('--color-text-secondary', theme.textSecondary);
+            root.style.setProperty('--color-text-muted', theme.textMuted);
+        }
+    } catch (e) {
+        console.warn('Failed to load theme from localStorage', e);
     }
   }, []);
 

@@ -1022,7 +1022,7 @@ const CockpitView: React.FC<CockpitViewProps> = ({ type }) => {
         );
 
         const SectionTitle = ({ title }: { title: string }) => (
-            <h3 className="text-base font-bold text-text-primary border-l-4 border-blue-500 pl-3 mb-4 mt-8">{title}</h3>
+            <h3 className="text-base font-bold text-text-primary border-l-4 border-blue-500 pl-3 mb-4">{title}</h3>
         );
 
         const EmptyState = () => (
