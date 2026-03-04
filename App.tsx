@@ -10,34 +10,59 @@ export type ScreenType = 'Governance' | 'Industry';
 
 const THEMES = [
     { 
-      id: 'zinc', name: '默认黑', primary: '#3b82f6', 
-      background: '#09090b', surface: '#18181b', surfaceHighlight: '#27272a',
-      border: '#27272a', borderHighlight: '#3f3f46',
-      textPrimary: '#e4e4e7', textSecondary: '#a1a1aa', textMuted: '#71717a'
+      id: 'zinc', name: '默认黑', primary: '#3b82f6', // blue-500
+      background: '#09090b', // zinc-950
+      surface: '#18181b', // zinc-900
+      surfaceHighlight: '#27272a', // zinc-800
+      border: '#27272a', // zinc-800
+      borderHighlight: '#3f3f46', // zinc-700
+      textPrimary: '#fafafa', // zinc-50
+      textSecondary: '#a1a1aa', // zinc-400
+      textMuted: '#71717a' // zinc-500
     },
     { 
-      id: 'light', name: '纯净白', primary: '#3b82f6', 
-      background: '#f8fafc', surface: '#ffffff', surfaceHighlight: '#f1f5f9',
-      border: '#e2e8f0', borderHighlight: '#cbd5e1',
-      textPrimary: '#0f172a', textSecondary: '#475569', textMuted: '#94a3b8'
+      id: 'light', name: '纯净白', primary: '#3b82f6', // blue-500
+      background: '#f8fafc', // slate-50
+      surface: '#ffffff', // white
+      surfaceHighlight: '#f1f5f9', // slate-100
+      border: '#e2e8f0', // slate-200
+      borderHighlight: '#cbd5e1', // slate-300
+      textPrimary: '#0f172a', // slate-900
+      textSecondary: '#64748b', // slate-500
+      textMuted: '#94a3b8' // slate-400
     },
     { 
-      id: 'blue', name: '科技蓝', primary: '#3b82f6', 
-      background: '#0f172a', surface: '#1e293b', surfaceHighlight: '#334155',
-      border: '#1e293b', borderHighlight: '#334155',
-      textPrimary: '#f1f5f9', textSecondary: '#94a3b8', textMuted: '#64748b'
+      id: 'blue', name: '科技蓝', primary: '#3b82f6', // blue-500
+      background: '#0f172a', // slate-900
+      surface: '#1e293b', // slate-800
+      surfaceHighlight: '#334155', // slate-700
+      border: '#1e293b', // slate-800
+      borderHighlight: '#334155', // slate-700
+      textPrimary: '#f8fafc', // slate-50
+      textSecondary: '#94a3b8', // slate-400
+      textMuted: '#64748b' // slate-500
     },
     { 
-      id: 'purple', name: '深邃紫', primary: '#8b5cf6', 
-      background: '#1e1b4b', surface: '#312e81', surfaceHighlight: '#4338ca',
-      border: '#312e81', borderHighlight: '#4338ca',
-      textPrimary: '#e0e7ff', textSecondary: '#a5b4fc', textMuted: '#818cf8'
+      id: 'purple', name: '深邃紫', primary: '#8b5cf6', // violet-500
+      background: '#2e1065', // violet-950
+      surface: '#4c1d95', // violet-900
+      surfaceHighlight: '#5b21b6', // violet-800
+      border: '#4c1d95', // violet-900
+      borderHighlight: '#5b21b6', // violet-800
+      textPrimary: '#f5f3ff', // violet-50
+      textSecondary: '#a78bfa', // violet-400
+      textMuted: '#8b5cf6' // violet-500
     },
     { 
-      id: 'green', name: '生态绿', primary: '#10b981', 
-      background: '#022c22', surface: '#064e3b', surfaceHighlight: '#065f46',
-      border: '#064e3b', borderHighlight: '#065f46',
-      textPrimary: '#ecfdf5', textSecondary: '#6ee7b7', textMuted: '#34d399'
+      id: 'green', name: '生态绿', primary: '#10b981', // emerald-500
+      background: '#022c22', // emerald-950
+      surface: '#064e3b', // emerald-900
+      surfaceHighlight: '#065f46', // emerald-800
+      border: '#064e3b', // emerald-900
+      borderHighlight: '#065f46', // emerald-800
+      textPrimary: '#ecfdf5', // emerald-50
+      textSecondary: '#34d399', // emerald-400
+      textMuted: '#10b981' // emerald-500
     },
   ];
 

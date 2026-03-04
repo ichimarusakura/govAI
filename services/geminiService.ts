@@ -11,12 +11,16 @@ const getClient = () => {
   return new GoogleGenAI({ apiKey });
 };
 
-export const generateResponse = async (prompt: string, modelName: string = 'gemini-3-flash-preview'): Promise<string> => {
+export const generateResponse = async (prompt: string, defaultModelName: string = 'gemini-3-flash-preview'): Promise<string> => {
   const ai = getClient();
   let apiKey = process.env.API_KEY;
+  let modelName = defaultModelName;
+
   try {
     const savedKey = localStorage.getItem('gemini_api_key');
+    const savedModel = localStorage.getItem('gemini_model_name');
     if (savedKey) apiKey = savedKey;
+    if (savedModel) modelName = savedModel;
   } catch (e) {
     console.warn('Failed to access localStorage', e);
   }

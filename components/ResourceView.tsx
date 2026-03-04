@@ -7,13 +7,29 @@ import {
   Plus, ArrowLeft, RefreshCw, Eye, Activity, FileSearch,
   ToggleLeft, ToggleRight, Loader2, Table, MousePointerClick,
   CheckCircle2, AlertCircle, Settings2, Wand2, Save, LayoutTemplate,
-  ChevronRight, ArrowRight
+  ChevronRight, ArrowRight, Database, Clock, File
 } from 'lucide-react';
 import { Policy, ModelText, Indicator, Report } from '../types';
 
-type ResourceTab = 'Policy' | 'ModelText' | 'Indicator' | 'Case' | 'MyLibrary';
+type ResourceTab = 'Knowledge' | 'Policy' | 'ModelText' | 'Indicator' | 'Case' | 'MyLibrary';
 
 // --- TYPES ---
+interface KnowledgeBase {
+    id: string;
+    name: string;
+    description: string;
+    docCount: number;
+    appCount: number;
+    lastEdited: string;
+    enabled: boolean;
+    icon: string;
+    color: string;
+    tags?: string[];
+    author?: string;
+    editTime?: string;
+    customTags?: string[];
+}
+
 interface ColumnConfig {
     index: number;
     name: string;
@@ -29,6 +45,81 @@ interface ConfigTemplate {
 }
 
 // --- MOCK DATA ---
+const MOCK_KNOWLEDGE_BASES: KnowledgeBase[] = [
+    { 
+        id: '1', 
+        name: 'ai_studio_code.txt', 
+        description: 'useful for when you want to answer queries about the ai_studio_code.txt', 
+        docCount: 1, 
+        appCount: 0, 
+        lastEdited: '22 天前', 
+        enabled: true, 
+        icon: '🤖', 
+        color: 'bg-orange-100 text-orange-600',
+        tags: ['通用', '高质量 · 向量检索'],
+        author: 'Dify',
+        editTime: '22 天前'
+    },
+    { 
+        id: '2', 
+        name: 'MN_房地产产业.xlsx', 
+        description: 'useful for when you want to answer queries about the MN_房地产产业.xlsx', 
+        docCount: 3, 
+        appCount: 0, 
+        lastEdited: '7 个月前', 
+        enabled: true, 
+        icon: '🤖', 
+        color: 'bg-orange-100 text-orange-600',
+        tags: ['父子', '高质量 · 混合检索'],
+        author: 'Dify',
+        editTime: '7 个月前',
+        customTags: ['3434', '22', '热热热', '喂喂喂']
+    },
+    { 
+        id: '3', 
+        name: '统计局', 
+        description: '', 
+        docCount: 1, 
+        appCount: 0, 
+        lastEdited: '7 个月前', 
+        enabled: true, 
+        icon: '🤖', 
+        color: 'bg-orange-100 text-orange-600',
+        tags: ['通用', '高质量 · 混合检索'],
+        author: 'Dify',
+        editTime: '7 个月前',
+        customTags: ['热热热']
+    },
+    { 
+        id: '4', 
+        name: '调研报告_党建_X县破解基层治理“小...', 
+        description: 'useful for when you want to answer queries about the 调研报告_党建_X县破解基层治理“小马拉大车”突出问题的调研报...', 
+        docCount: 3, 
+        appCount: 0, 
+        lastEdited: '9 个月前', 
+        enabled: true, 
+        icon: '🤖', 
+        color: 'bg-orange-100 text-orange-600',
+        tags: ['父子', '高质量 · 混合检索'],
+        author: 'Dify',
+        editTime: '9 个月前'
+    },
+    { 
+        id: '5', 
+        name: '鸠江区人民政府办公室关于印发《芜湖市...', 
+        description: 'useful for when you want to answer queries about the 鸠江区人民政府办公室关于印发《芜湖市鸠江区安全生产委托执法...', 
+        docCount: 1, 
+        appCount: 0, 
+        lastEdited: '9 个月前', 
+        enabled: true, 
+        icon: '🤖', 
+        color: 'bg-orange-100 text-orange-600',
+        tags: ['父子', '高质量 · 向量检索'],
+        author: 'Dify',
+        editTime: '9 个月前'
+    },
+];
+
 const MOCK_POLICIES: Policy[] = [
   { id: '1', title: '工业数字化转型行动计划', date: '2023-11-15', organ: '工信部', region: '全国', type: '法规', source: '系统数据' },
   { id: '2', title: '关于本市纺织行业补贴通知', date: '2024-01-20', organ: '市政府', region: '杭州', type: '通知', source: '用户上传' },
@@ -203,7 +294,7 @@ const UploadModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpe
 // --- MAIN VIEW ---
 
 const ResourceView: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<ResourceTab>('Policy');
+  const [activeTab, setActiveTab] = useState<ResourceTab>('Knowledge');
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -284,6 +375,123 @@ const ResourceView: React.FC = () => {
       }
   };
 
+  // --- Knowledge Base View ---
+  const renderKnowledgeView = () => (
+    <div key="Knowledge" className="flex-1 flex flex-col h-full bg-background animate-fade-in">
+        {/* Header */}
+        <div className="px-8 py-6 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2 text-sm text-text-secondary font-medium cursor-pointer">
+                    <input type="checkbox" className="rounded border-border text-[var(--color-primary)] focus:ring-[var(--color-primary)] bg-surface" />
+                    所有知识库
+                </label>
+                <div className="w-5 h-5 rounded-full border border-border flex items-center justify-center text-text-muted text-xs cursor-help">?</div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+                <div className="relative group">
+                    <button className="flex items-center gap-2 px-3 py-1.5 bg-surface border border-border rounded-lg text-sm text-text-secondary hover:bg-surface-highlight transition-colors">
+                        <Tag size={14} /> 全部标签 <ChevronDown size={14} />
+                    </button>
+                </div>
+                <div className="relative">
+                    <Search className="absolute left-3 top-2 text-text-muted" size={16} />
+                    <input 
+                        type="text" 
+                        placeholder="搜索" 
+                        className="pl-9 pr-4 py-1.5 bg-surface-highlight border-none rounded-lg text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 w-64 placeholder:text-text-muted"
+                    />
+                </div>
+                <div className="h-6 w-px bg-border mx-2"></div>
+                <button className="flex items-center gap-2 px-3 py-1.5 bg-surface border border-border rounded-lg text-sm text-text-secondary hover:bg-surface-highlight transition-colors">
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div> 服务 API
+                </button>
+                <button className="flex items-center gap-2 px-3 py-1.5 bg-surface border border-border rounded-lg text-sm text-text-secondary hover:bg-surface-highlight transition-colors">
+                    <Database size={14} /> 外部知识库 API
+                </button>
+            </div>
+        </div>
+
+        {/* Content */}
+        <div className="px-8 pb-8 overflow-y-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {/* Create New Card */}
+                <div className="bg-surface-highlight/30 border border-border rounded-xl p-0 flex flex-col cursor-pointer hover:shadow-md transition-all group h-[220px]">
+                    <div className="flex-1 p-6 flex flex-col justify-center items-start">
+                        <div className="flex items-center gap-2 text-text-secondary mb-2">
+                            <Plus size={20} />
+                            <span className="font-medium">创建知识库</span>
+                        </div>
+                        <p className="text-xs text-text-muted pl-7">通过知识流水线创建知识库</p>
+                    </div>
+                    <div className="px-6 py-4 border-t border-border flex items-center gap-2 text-text-muted hover:text-[var(--color-primary)] transition-colors">
+                        <div className="w-4 h-4 rounded-full border border-current flex items-center justify-center text-[10px]">
+                            <Plus size={8} />
+                        </div>
+                        <span className="text-sm font-medium">连接外部知识库</span>
+                    </div>
+                </div>
+
+                {MOCK_KNOWLEDGE_BASES.map(kb => (
+                    <div key={kb.id} className="bg-surface border border-border rounded-xl p-5 hover:shadow-lg transition-all duration-200 group flex flex-col h-[220px] relative cursor-pointer">
+                        <div className="flex gap-3 mb-3">
+                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-2xl shrink-0 ${kb.color}`}>
+                                {kb.icon}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <h3 className="font-bold text-text-primary text-base truncate mb-1" title={kb.name}>{kb.name}</h3>
+                                <div className="flex items-center gap-2 text-xs text-text-muted">
+                                    <span>{kb.author} · 编辑于 {kb.editTime}</span>
+                                </div>
+                            </div>
+                            <button className="text-text-muted hover:text-text-primary self-start">
+                                <MoreHorizontal size={16} />
+                            </button>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-2 mb-3">
+                            {kb.tags?.map((tag, i) => (
+                                <span key={i} className="px-1.5 py-0.5 bg-surface-highlight text-text-secondary text-[10px] rounded border border-border">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+
+                        <p className="text-xs text-text-muted mb-auto line-clamp-2 leading-relaxed">
+                            {kb.description}
+                        </p>
+
+                        {/* Custom Tags Row */}
+                        {kb.customTags && kb.customTags.length > 0 && (
+                             <div className="flex gap-1 overflow-hidden mb-3">
+                                {kb.customTags.map((t, i) => (
+                                    <span key={i} className="px-1.5 py-0.5 bg-surface text-text-muted text-[10px] rounded border border-border flex items-center gap-1 whitespace-nowrap">
+                                        <Tag size={8} /> {t}
+                                    </span>
+                                ))}
+                             </div>
+                        )}
+
+                        <div className="flex items-center gap-4 pt-3 border-t border-border text-xs text-text-muted">
+                            <div className="flex items-center gap-1.5">
+                                <FileText size={14} />
+                                <span>{kb.docCount}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <LayoutTemplate size={14} />
+                                <span>{kb.appCount}</span>
+                            </div>
+                            <div className="ml-auto">
+                                更新于 {kb.lastEdited}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+  );
+
   const renderSidebar = () => (
     <div className="w-56 bg-surface border-r border-border flex flex-col py-4 shrink-0">
       <div className="px-4 mb-6">
@@ -293,6 +501,7 @@ const ResourceView: React.FC = () => {
       </div>
       <nav className="flex-1 space-y-1 px-2">
         {[
+          { id: 'Knowledge', label: '知识库', icon: Database },
           { id: 'Policy', label: '政策库', icon: FileText },
           { id: 'ModelText', label: '范文库', icon: BookOpen },
           { id: 'Indicator', label: '指标库', icon: BarChart2 },
@@ -1340,6 +1549,7 @@ const ResourceView: React.FC = () => {
   return (
     <div className="flex h-full bg-background">
       {renderSidebar()}
+      {activeTab === 'Knowledge' && renderKnowledgeView()}
       {activeTab === 'Policy' && renderPolicyContent()}
       {activeTab === 'ModelText' && renderModelTextContent()}
       {activeTab === 'Indicator' && renderIndicatorContent()}

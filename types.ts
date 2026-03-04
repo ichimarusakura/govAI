@@ -39,6 +39,7 @@ export interface ChatMessage {
   role: 'user' | 'model';
   text: string;
   timestamp: Date;
+  type?: string;
 }
 
 export interface ChatSession {
@@ -50,7 +51,7 @@ export interface ChatSession {
 }
 
 export enum AgentType {
-  ContentQuery = '内容查询',
+  ContentQuery = '智能问答',
   Translation = '文档翻译',
   Polishing = '文稿润色',
   Writing = '公文写作',
