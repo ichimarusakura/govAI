@@ -48,6 +48,7 @@ export interface ChatSession {
   lastMessage: string;
   updatedAt: Date;
   agentType?: AgentType | string;
+  isPinned?: boolean;
 }
 
 export enum AgentType {

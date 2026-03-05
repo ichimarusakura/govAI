@@ -11,7 +11,7 @@ import {
   PanelLeftClose, PanelLeftOpen, Settings2,
   Languages, PenTool, FileCheck, FileCode,
   Trash2, Info, CheckCircle2, ArrowLeft, FilePlus, X, Filter,
-  BookOpen, AlertCircle, ChevronUp, Check, ThumbsUp, ThumbsDown, FileSearch, Download
+  BookOpen, AlertCircle, ChevronUp, Check, ThumbsUp, ThumbsDown, FileSearch, Download, Copy, RefreshCw, Eye, Bookmark, MoreHorizontal, Pin, Edit
 } from 'lucide-react';
 
 const AGENT_ICONS: Record<string, React.ReactNode> = {
@@ -74,9 +74,7 @@ const MOCK_SESSIONS_DATA: ChatSession[] = [
 const MOCK_SESSION_HISTORY: Record<string, ChatMessage[]> = {
     '8': [
         { role: 'user', text: '帮我写一份2026年1-6月经济运行分析情况报告', timestamp: new Date(Date.now() - 200000) },
-        { role: 'model', text: '好的，您的问题已经成功接收，首先让我确认下您的任务需求', timestamp: new Date(Date.now() - 190000), type: 'writing_form' },
-        { role: 'model', text: '', timestamp: new Date(Date.now() - 180000), type: 'writing_outline' },
-        { role: 'model', text: '谢谢您提供的信息，按照你的要求撰写的公文如下', timestamp: new Date(Date.now() - 170000), type: 'writing_result' }
+        { role: 'model', text: '好的，您的问题已经成功接收，首先让我确认下您的任务需求', timestamp: new Date(Date.now() - 190000), type: 'writing_full' }
     ],
     '1': [
         { role: 'user', text: '最近纺织行业出口情况如何？', timestamp: new Date(Date.now() - 100000) },
@@ -129,6 +127,10 @@ const AgentView: React.FC = () => {
   const [isDocViewerOpen, setIsDocViewerOpen] = useState(false);
   const [currentViewedDoc, setCurrentViewedDoc] = useState('');
   
+  const [sessionMenuOpenId, setSessionMenuOpenId] = useState<string | null>(null);
+  const [renamingSessionId, setRenamingSessionId] = useState<string | null>(null);
+  const [renameValue, setRenameValue] = useState('');
+
   // Mock sessions
   const [sessions, setSessions] = useState<ChatSession[]>(MOCK_SESSIONS_DATA);
 
@@ -264,6 +266,13 @@ const AgentView: React.FC = () => {
     }
   };
 
+  const handleSaveRename = (id: string) => {
+    if (renameValue.trim()) {
+        setSessions(prev => prev.map(s => s.id === id ? { ...s, title: renameValue } : s));
+    }
+    setRenamingSessionId(null);
+  };
+
   // Logic for populating input based on contract mode
   const handleSmartDraft = () => {
     setContractMode('smart');
@@ -277,87 +286,84 @@ const AgentView: React.FC = () => {
   };
 
   const renderWritingForm = () => (
-    <div className="mt-4 text-text-primary w-full max-w-3xl">
-      <div className="bg-surface border border-border rounded-xl shadow-sm overflow-hidden">
-        <div className="px-4 py-3 border-b border-border flex justify-between items-center bg-surface-highlight/30">
-          <span className="font-bold text-base">待填信息</span>
-          <ChevronUp size={18} className="text-text-muted" />
+    <div className="mt-3 w-full max-w-3xl">
+      <div className="border border-border rounded-xl p-5 space-y-6 bg-transparent">
+        <div className="flex justify-between items-center mb-4 pb-2 border-b border-border">
+          <span className="font-bold text-base text-text-primary">待填信息</span>
         </div>
-        <div className="p-5 space-y-6">
-          {/* 1. 公文标题 */}
-          <div>
-            <label className="block text-sm mb-2 text-text-secondary">1、公文标题</label>
-            <input type="text" value="2026年1-6月经济运行分析情况报告" readOnly className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-text-secondary focus:outline-none" />
+        {/* 1. 公文标题 */}
+        <div>
+          <label className="block text-sm mb-2 text-text-secondary">1、公文标题</label>
+          <input type="text" value="2026年1-6月经济运行分析情况报告" readOnly className="w-full bg-transparent border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none" />
+        </div>
+        {/* 2. 公文类型 */}
+        <div>
+          <label className="block text-sm mb-2 text-text-secondary">2、公文类型</label>
+          <div className="relative">
+            <select className="w-full bg-transparent border border-border rounded-lg px-3 py-2 text-sm text-text-primary appearance-none focus:outline-none">
+              <option>事务公文 - 情况报告</option>
+            </select>
+            <ChevronDown size={16} className="absolute right-3 top-2.5 text-text-muted pointer-events-none" />
           </div>
-          {/* 2. 公文类型 */}
-          <div>
-            <label className="block text-sm mb-2 text-text-secondary">2、公文类型</label>
-            <div className="relative">
-              <select className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-text-secondary appearance-none focus:outline-none">
-                <option>事务公文 - 情况报告</option>
-              </select>
-              <ChevronDown size={16} className="absolute right-3 top-2.5 text-text-muted pointer-events-none" />
+        </div>
+        {/* 3. 确认数据 */}
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm text-text-secondary">3、确认数据</label>
+            <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Filter size={12}/> 选择数据</button>
+          </div>
+          <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-transparent hover:bg-surface-highlight/50 transition-colors">
+            <div className="flex items-center gap-2">
+              <FileText size={16} className="text-green-500" />
+              <span className="text-sm text-text-primary">数发局-规上企业经济运行分析核心指标表头.xlsx</span>
+            </div>
+            <button onClick={() => handleViewDetails('数发局-规上企业经济运行分析核心指标表头.xlsx')} className="text-xs text-blue-500 hover:underline">查看详情</button>
+          </div>
+        </div>
+        {/* 4. 参考范文 */}
+        <div>
+          <div className="flex justify-between items-center mb-1">
+            <label className="text-sm text-text-secondary">4、参考范文</label>
+            <div className="flex items-center gap-3">
+              <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Search size={12}/> 一键检索</button>
+              <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><FileSearch size={12}/> 查找文档</button>
             </div>
           </div>
-          {/* 3. 确认数据 */}
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label className="text-sm text-text-secondary">3、确认数据</label>
-              <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Filter size={12}/> 选择数据</button>
+          <div className="flex items-center gap-1 text-xs text-orange-500 mb-2">
+            <AlertCircle size={12} />
+            <span>因此类公文结构较为复杂，涉及数据较多，建议您选择合适的范文作为参考</span>
+          </div>
+          <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-transparent hover:bg-surface-highlight/50 transition-colors">
+            <div className="flex items-center gap-2">
+              <FileText size={16} className="text-blue-500" />
+              <span className="text-sm text-text-primary">1-6月经济运行分析情况汇报</span>
             </div>
-            <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-background">
-              <div className="flex items-center gap-2">
-                <FileText size={16} className="text-green-500" />
-                <span className="text-sm text-text-primary">数发局-规上企业经济运行分析核心指标表头.xlsx</span>
-              </div>
-              <button onClick={() => handleViewDetails('数发局-规上企业经济运行分析核心指标表头.xlsx')} className="text-xs text-blue-500 hover:underline">查看详情</button>
+            <div className="flex items-center gap-3">
+              <button onClick={() => handleViewDetails('1-6月经济运行分析情况汇报')} className="text-xs text-blue-500 hover:underline">查看详情</button>
+              <div className="w-4 h-4 rounded border border-border flex items-center justify-center"><Check size={12} className="text-text-muted"/></div>
             </div>
           </div>
-          {/* 4. 参考范文 */}
-          <div>
-            <div className="flex justify-between items-center mb-1">
-              <label className="text-sm text-text-secondary">4、参考范文</label>
-              <div className="flex items-center gap-3">
-                <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Search size={12}/> 一键检索</button>
-                <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><FileSearch size={12}/> 查找文档</button>
-              </div>
+        </div>
+        {/* 5. 其他参考文档 */}
+        <div>
+          <label className="block text-sm mb-2 text-text-secondary">5、其他参考文档</label>
+          <div className="border border-dashed border-border rounded-lg p-6 flex flex-col items-center justify-center bg-transparent cursor-pointer hover:bg-surface-highlight/50 transition-colors">
+            <div className="flex items-center gap-2 text-sm text-text-primary mb-1">
+              <div className="w-5 h-5 rounded-full bg-text-primary text-surface flex items-center justify-center"><Plus size={14}/></div>
+              上传文件
             </div>
-            <div className="flex items-center gap-1 text-xs text-orange-500 mb-2">
-              <AlertCircle size={12} />
-              <span>因此类公文结构较为复杂，涉及数据较多，建议您选择合适的范文作为参考</span>
-            </div>
-            <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-background">
-              <div className="flex items-center gap-2">
-                <FileText size={16} className="text-blue-500" />
-                <span className="text-sm text-text-primary">1-6月经济运行分析情况汇报</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <button onClick={() => handleViewDetails('1-6月经济运行分析情况汇报')} className="text-xs text-blue-500 hover:underline">查看详情</button>
-                <div className="w-4 h-4 rounded border border-border bg-surface-highlight flex items-center justify-center"><Check size={12} className="text-text-muted"/></div>
-              </div>
-            </div>
+            <div className="text-xs text-text-muted">只支持 pdf、txt、doc、docx、md文件</div>
           </div>
-          {/* 5. 其他参考文档 */}
-          <div>
-            <label className="block text-sm mb-2 text-text-secondary">5、其他参考文档</label>
-            <div className="border border-dashed border-border rounded-lg p-6 flex flex-col items-center justify-center bg-background/50 cursor-pointer hover:bg-surface-highlight/50 transition-colors">
-              <div className="flex items-center gap-2 text-sm text-text-primary mb-1">
-                <div className="w-5 h-5 rounded-full bg-text-primary text-surface flex items-center justify-center"><Plus size={14}/></div>
-                上传文件
-              </div>
-              <div className="text-xs text-text-muted">只支持 pdf、txt、doc、docx、md文件</div>
-            </div>
-          </div>
-          {/* 6. 其他要求 */}
-          <div>
-            <label className="block text-sm mb-2 text-text-secondary">6、其他要求</label>
-            <input type="text" placeholder="请输入" className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none placeholder:text-text-muted" />
-          </div>
-          
-          {/* Submit Button */}
-          <div className="flex justify-end pt-2">
-            <button className="px-6 py-2 bg-surface-highlight text-text-muted rounded-lg text-sm font-medium cursor-not-allowed">确认</button>
-          </div>
+        </div>
+        {/* 6. 其他要求 */}
+        <div>
+          <label className="block text-sm mb-2 text-text-secondary">6、其他要求</label>
+          <input type="text" placeholder="请输入" className="w-full bg-transparent border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none placeholder:text-text-muted" />
+        </div>
+        
+        {/* Submit Button */}
+        <div className="flex justify-end pt-2">
+          <button className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">确认</button>
         </div>
       </div>
     </div>
@@ -365,106 +371,110 @@ const AgentView: React.FC = () => {
 
   const renderWritingOutline = () => (
     <div className="mt-4 w-full max-w-4xl text-text-primary">
-      <div className="rounded-xl">
-        <h3 className="text-xl font-bold mb-6">大纲</h3>
-        
-        <div className="space-y-4 mb-6">
-          <div className="flex items-center gap-2 text-sm text-text-secondary">
-            <CheckCircle2 size={16} className="text-text-muted" /> 参考资料分析 <ChevronDown size={14} className="text-text-muted"/>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-text-secondary">
-            <CheckCircle2 size={16} className="text-text-muted" /> 生成大纲草稿 <ChevronDown size={14} className="text-text-muted"/>
-          </div>
+      {/* Status indicators */}
+      <div className="border border-border rounded-xl bg-transparent overflow-hidden mb-6">
+        <div className="px-4 py-3 flex justify-between items-center cursor-pointer hover:bg-surface-highlight/50 transition-colors border-b border-border">
+            <div className="flex items-center gap-2 text-sm text-text-primary">
+                <CheckCircle2 size={16} className="text-text-muted" />
+                <span>参考资料分析</span>
+            </div>
+            <ChevronDown size={16} className="text-text-muted" />
         </div>
+        <div className="px-4 py-3 flex justify-between items-center cursor-pointer hover:bg-surface-highlight/50 transition-colors">
+            <div className="flex items-center gap-2 text-sm text-text-primary">
+                <CheckCircle2 size={16} className="text-text-muted" />
+                <span>生成大纲草稿</span>
+            </div>
+            <ChevronDown size={16} className="text-text-muted" />
+        </div>
+      </div>
+
+      <div className="px-2">
+        <h2 className="text-2xl font-bold text-center mb-8">2026年1-6月经济运行分析情况报告</h2>
         
-        <div className="bg-surface border border-border rounded-xl p-8 shadow-sm">
-          <h2 className="text-2xl font-bold text-center mb-8">2026年1-6月经济运行分析情况报告</h2>
+        <div className="space-y-8">
+          {/* Section 1 */}
+          <div>
+            <h3 className="text-lg font-bold mb-3">一、总体运行情况概述</h3>
+            <p className="text-sm text-text-secondary mb-3">对2026年1-6月经济运行总体情况进行概括性描述</p>
+            <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1 mb-4">
+              <li>概述规上企业数量变化情况（新增、退库、转出等）；说明整体营收预估完成情况（规模、同比变化、缺口分析）；明确经济运行的主要特点和趋势</li>
+            </ul>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-xs text-text-muted">数据要求：</span>
+              <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Filter size={12}/> 选择数据</button>
+            </div>
+            <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-transparent hover:bg-surface-highlight/50 transition-colors">
+              <div className="flex items-center gap-2">
+                <FileText size={16} className="text-green-500" />
+                <span className="text-sm text-text-primary">数发局-规上企业经济运行分析核心指标表头.xlsx</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <button onClick={() => handleViewDetails('数发局-规上企业经济运行分析核心指标表头.xlsx')} className="text-xs text-blue-500 hover:underline">查看详情</button>
+                <button className="text-text-muted hover:text-red-500"><Trash2 size={14}/></button>
+              </div>
+            </div>
+          </div>
           
-          <div className="space-y-8">
-            {/* Section 1 */}
-            <div>
-              <h3 className="text-lg font-bold mb-3">一、总体运行情况概述</h3>
-              <p className="text-sm text-text-secondary mb-3">对2026年1-6月经济运行总体情况进行概括性描述</p>
-              <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1 mb-4">
-                <li>概述规上企业数量变化情况（新增、退库、转出等）；说明整体营收预估完成情况（规模、同比变化、缺口分析）；明确经济运行的主要特点和趋势</li>
-              </ul>
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-xs text-text-muted">数据要求：</span>
-                <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Filter size={12}/> 选择数据</button>
+          <div className="w-full h-px bg-border"></div>
+
+          {/* Section 2 */}
+          <div>
+            <h3 className="text-lg font-bold mb-3">二、指标完成情况分析</h3>
+            <p className="text-sm text-text-secondary mb-3">对主要经济指标完成情况进行详细分解和分析</p>
+            <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1 mb-4">
+              <li>列举正增长企业及其营收与同比增长数据；列举降幅明显企业及其营收与同比降低数据；分析总体缺口形成的主要原因及影响</li>
+            </ul>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-xs text-text-muted">数据要求：</span>
+              <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Filter size={12}/> 选择数据</button>
+            </div>
+            <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-transparent hover:bg-surface-highlight/50 transition-colors">
+              <div className="flex items-center gap-2">
+                <FileText size={16} className="text-green-500" />
+                <span className="text-sm text-text-primary">数发局-规上企业经济运行分析核心指标表头.xlsx</span>
               </div>
-              <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-background">
-                <div className="flex items-center gap-2">
-                  <FileText size={16} className="text-green-500" />
-                  <span className="text-sm text-text-primary">数发局-规上企业经济运行分析核心指标表头.xlsx</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button onClick={() => handleViewDetails('数发局-规上企业经济运行分析核心指标表头.xlsx')} className="text-xs text-blue-500 hover:underline">查看详情</button>
-                  <button className="text-text-muted hover:text-red-500"><Trash2 size={14}/></button>
-                </div>
+              <div className="flex items-center gap-3">
+                <button onClick={() => handleViewDetails('数发局-规上企业经济运行分析核心指标表头.xlsx')} className="text-xs text-blue-500 hover:underline">查看详情</button>
+                <button className="text-text-muted hover:text-red-500"><Trash2 size={14}/></button>
               </div>
             </div>
-            
-            <div className="w-full h-px bg-border"></div>
-  
-            {/* Section 2 */}
-            <div>
-              <h3 className="text-lg font-bold mb-3">二、指标完成情况分析</h3>
-              <p className="text-sm text-text-secondary mb-3">对主要经济指标完成情况进行详细分解和分析</p>
-              <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1 mb-4">
-                <li>列举正增长企业及其营收与同比增长数据；列举降幅明显企业及其营收与同比降低数据；分析总体缺口形成的主要原因及影响</li>
-              </ul>
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-xs text-text-muted">数据要求：</span>
-                <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Filter size={12}/> 选择数据</button>
+          </div>
+
+          <div className="w-full h-px bg-border"></div>
+
+          {/* Section 3 */}
+          <div>
+            <h3 className="text-lg font-bold mb-3">三、经济运行影响因素分析</h3>
+            <p className="text-sm text-text-secondary mb-3">从多维度深入分析影响经济运行的关键因素</p>
+            <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1 mb-4">
+              <li>分析项目周期性对营收的影响（回款周期、项目验收等）；分析企业业务重心调整或内部变动的影响（高利润项目转向、业务范围变化等）；分析外部环境变化的影响（客户需求波动、市场环境变化等）</li>
+            </ul>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-xs text-text-muted">数据要求：</span>
+              <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Filter size={12}/> 选择数据</button>
+            </div>
+            <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-transparent hover:bg-surface-highlight/50 transition-colors">
+              <div className="flex items-center gap-2">
+                <FileText size={16} className="text-green-500" />
+                <span className="text-sm text-text-primary">数发局-规上企业经济运行分析核心指标表头.xlsx</span>
               </div>
-              <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-background">
-                <div className="flex items-center gap-2">
-                  <FileText size={16} className="text-green-500" />
-                  <span className="text-sm text-text-primary">数发局-规上企业经济运行分析核心指标表头.xlsx</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button onClick={() => handleViewDetails('数发局-规上企业经济运行分析核心指标表头.xlsx')} className="text-xs text-blue-500 hover:underline">查看详情</button>
-                  <button className="text-text-muted hover:text-red-500"><Trash2 size={14}/></button>
-                </div>
+              <div className="flex items-center gap-3">
+                <button onClick={() => handleViewDetails('数发局-规上企业经济运行分析核心指标表头.xlsx')} className="text-xs text-blue-500 hover:underline">查看详情</button>
+                <button className="text-text-muted hover:text-red-500"><Trash2 size={14}/></button>
               </div>
             </div>
-  
-            <div className="w-full h-px bg-border"></div>
-  
-            {/* Section 3 */}
-            <div>
-              <h3 className="text-lg font-bold mb-3">三、经济运行影响因素分析</h3>
-              <p className="text-sm text-text-secondary mb-3">从多维度深入分析影响经济运行的关键因素</p>
-              <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1 mb-4">
-                <li>分析项目周期性对营收的影响（回款周期、项目验收等）；分析企业业务重心调整或内部变动的影响（高利润项目转向、业务范围变化等）；分析外部环境变化的影响（客户需求波动、市场环境变化等）</li>
-              </ul>
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-xs text-text-muted">数据要求：</span>
-                <button className="text-xs text-text-muted flex items-center gap-1 hover:text-blue-500"><Filter size={12}/> 选择数据</button>
-              </div>
-              <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-background">
-                <div className="flex items-center gap-2">
-                  <FileText size={16} className="text-green-500" />
-                  <span className="text-sm text-text-primary">数发局-规上企业经济运行分析核心指标表头.xlsx</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button onClick={() => handleViewDetails('数发局-规上企业经济运行分析核心指标表头.xlsx')} className="text-xs text-blue-500 hover:underline">查看详情</button>
-                  <button className="text-text-muted hover:text-red-500"><Trash2 size={14}/></button>
-                </div>
-              </div>
-            </div>
-  
-            <div className="w-full h-px bg-border"></div>
-  
-            {/* Section 4 */}
-            <div>
-              <h3 className="text-lg font-bold mb-3">四、下一步工作措施</h3>
-              <p className="text-sm text-text-secondary mb-3">针对当前经济运行情况提出具体的工作措施和建议</p>
-              <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1 mb-4">
-                <li>实施重点企业攻坚策略（动态跟踪、一企一策、项目纳统等）；协助企业拓展合作渠道（走访摸排、供需对接、人才培养等）；强化服务保障体系（政策支持、资金申报指导等）</li>
-              </ul>
-            </div>
-  
+          </div>
+
+          <div className="w-full h-px bg-border"></div>
+
+          {/* Section 4 */}
+          <div>
+            <h3 className="text-lg font-bold mb-3">四、下一步工作措施</h3>
+            <p className="text-sm text-text-secondary mb-3">针对当前经济运行情况提出具体的工作措施和建议</p>
+            <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1 mb-4">
+              <li>实施重点企业攻坚策略（动态跟踪、一企一策、项目纳统等）；协助企业拓展合作渠道（走访摸排、供需对接、人才培养等）；强化服务保障体系（政策支持、资金申报指导等）</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -473,31 +483,32 @@ const AgentView: React.FC = () => {
 
   const renderWritingResult = () => (
     <div className="mt-4 w-full max-w-3xl text-text-primary">
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 text-sm text-text-secondary">
-          <CheckCircle2 size={16} className="text-text-muted" /> 数据指标分析 <ChevronDown size={14} className="text-text-muted"/>
-        </div>
-        
-        <p className="text-sm">谢谢您提供的信息，按照你的要求撰写的公文如下</p>
-        
-        <div className="bg-surface border border-border rounded-xl p-4 shadow-sm w-80">
-          <div className="flex items-start gap-3 mb-3">
-            <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded flex items-center justify-center shrink-0">
-              <FileText size={18} />
+      <div className="border border-border rounded-xl bg-transparent overflow-hidden mb-6">
+        <div className="px-4 py-3 flex justify-between items-center cursor-pointer hover:bg-surface-highlight/50 transition-colors">
+            <div className="flex items-center gap-2 text-sm text-text-primary">
+                <CheckCircle2 size={16} className="text-text-muted" />
+                <span>数据指标分析与公文撰写</span>
             </div>
-            <div>
-              <div className="text-sm font-medium text-text-primary line-clamp-2">2026年1-6月经济运行分析情况报告</div>
-              <button onClick={() => handleViewDetails('2026年1-6月经济运行分析情况报告')} className="text-xs text-blue-500 hover:underline mt-1">查看详情</button>
-            </div>
+            <ChevronDown size={16} className="text-text-muted" />
+        </div>
+      </div>
+      
+      <p className="text-sm mb-4">谢谢您提供的信息，按照你的要求撰写的公文如下：</p>
+      
+      <div className="border border-border rounded-xl p-4 w-80 bg-transparent hover:bg-surface-highlight/50 transition-colors flex items-center justify-between group">
+        <div className="flex items-start gap-3 cursor-pointer" onClick={() => handleViewDetails('2026年1-6月经济运行分析情况报告')}>
+          <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center shrink-0">
+            <FileText size={20} />
           </div>
-          <div className="flex items-center gap-1 text-xs text-text-muted hover:text-text-primary cursor-pointer border-t border-border pt-3">
-            <Download size={14} /> 保存到我的文档
+          <div className="flex-1">
+            <div className="text-sm font-medium text-text-primary line-clamp-2">2026年1-6月经济运行分析情况报告.docx</div>
+            <div className="text-xs text-text-muted mt-1">12.5 KB</div>
           </div>
         </div>
-        
-        <div className="flex items-center gap-3 text-text-muted pt-2">
-          <button className="hover:text-blue-500"><ThumbsUp size={16}/></button>
-          <button className="hover:text-red-500"><ThumbsDown size={16}/></button>
+        <div className="flex items-center gap-2 text-text-muted opacity-0 group-hover:opacity-100 transition-opacity">
+          <button className="p-1.5 hover:bg-surface-highlight rounded-md hover:text-blue-500 transition-colors" title="下载"><Download size={16} /></button>
+          <button className="p-1.5 hover:bg-surface-highlight rounded-md hover:text-blue-500 transition-colors" title="查看" onClick={() => handleViewDetails('2026年1-6月经济运行分析情况报告')}><Eye size={16} /></button>
+          <button className="p-1.5 hover:bg-surface-highlight rounded-md hover:text-blue-500 transition-colors" title="保存到我的文库"><Bookmark size={16} /></button>
         </div>
       </div>
     </div>
@@ -738,9 +749,14 @@ const AgentView: React.FC = () => {
       </div>
   );
 
-  const filteredSessions = agentFilter === '全部' 
+  const filteredSessions = (agentFilter === '全部' 
     ? sessions 
-    : sessions.filter(s => s.agentType === agentFilter);
+    : sessions.filter(s => s.agentType === agentFilter)
+  ).sort((a, b) => {
+    if (a.isPinned && !b.isPinned) return -1;
+    if (!a.isPinned && b.isPinned) return 1;
+    return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+  });
 
   const renderChatView = () => (
       <div className="flex h-full bg-background text-text-primary">
@@ -824,7 +840,7 @@ const AgentView: React.FC = () => {
                         activeSessionId === session.id 
                         ? 'bg-surface-highlight border-border-highlight' 
                         : 'bg-surface border-border hover:border-border-highlight'
-                    }`}
+                    } ${sessionMenuOpenId === session.id ? 'z-20' : ''}`}
                 >
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
                       activeSessionId === session.id 
@@ -834,30 +850,91 @@ const AgentView: React.FC = () => {
                      {AGENT_ICONS[session.agentType as string] || <MessageSquare size={16} />}
                   </div>
                   <div className="overflow-hidden flex-1">
-                    <div className="flex justify-between items-start">
-                        <div className={`text-sm font-medium truncate pr-6 transition-colors ${activeSessionId === session.id ? 'text-blue-400' : 'text-text-primary group-hover:text-blue-400'}`}>
-                            {session.title}
-                        </div>
-                        <span className="text-[10px] text-text-muted shrink-0 mt-0.5 group-hover:opacity-0 transition-opacity absolute right-3">
-                            {session.updatedAt > new Date(Date.now() - 86400000) ? '今天' : 
-                             session.updatedAt > new Date(Date.now() - 172800000) ? '昨天' : 
-                             `${session.updatedAt.getMonth() + 1}/${session.updatedAt.getDate()}`}
-                        </span>
+                    <div className="flex justify-between items-start h-5 relative">
+                        {renamingSessionId === session.id ? (
+                            <input 
+                                type="text" 
+                                value={renameValue}
+                                onChange={(e) => setRenameValue(e.target.value)}
+                                onBlur={() => handleSaveRename(session.id)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleSaveRename(session.id)}
+                                autoFocus
+                                onClick={(e) => e.stopPropagation()}
+                                className="text-sm font-medium bg-background border border-blue-500 rounded px-1 w-full focus:outline-none h-6 -mt-0.5"
+                            />
+                        ) : (
+                            <div className={`text-sm font-medium truncate pr-6 transition-colors flex items-center gap-1.5 ${activeSessionId === session.id ? 'text-blue-400' : 'text-text-primary group-hover:text-blue-400'}`}>
+                                {session.isPinned && <Pin size={12} className="text-blue-500 shrink-0 rotate-45 fill-current" />}
+                                <span className="truncate">{session.title}</span>
+                            </div>
+                        )}
                     </div>
                     <div className="text-xs text-text-muted truncate mt-1 group-hover:text-text-secondary">{session.lastMessage}</div>
                   </div>
                   
-                  {/* Delete Button */}
-                  <button 
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setSessionToDelete(session.id);
-                    }}
-                    className="absolute right-2 top-2 p-1.5 text-text-muted hover:text-red-400 hover:bg-border-highlight/50 rounded-md opacity-0 group-hover:opacity-100 transition-all z-10"
-                    title="删除对话"
-                  >
-                      <Trash2 size={14} />
-                  </button>
+                  {/* Date / More Button - Moved outside overflow-hidden */}
+                  <div className="absolute right-3 top-3 flex items-center justify-end">
+                        {sessionMenuOpenId !== session.id && renamingSessionId !== session.id && (
+                            <span className="text-[10px] text-text-muted shrink-0 mt-0.5 group-hover:opacity-0 transition-opacity">
+                                {session.updatedAt > new Date(Date.now() - 86400000) ? '今天' : 
+                                session.updatedAt > new Date(Date.now() - 172800000) ? '昨天' : 
+                                `${session.updatedAt.getMonth() + 1}/${session.updatedAt.getDate()}`}
+                            </span>
+                        )}
+                        
+                        <button 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setSessionMenuOpenId(sessionMenuOpenId === session.id ? null : session.id);
+                            }}
+                            className={`p-1 text-text-muted hover:text-text-primary hover:bg-border-highlight rounded-md transition-all absolute right-[-4px] top-[-4px] ${sessionMenuOpenId === session.id ? 'opacity-100 visible' : 'opacity-0 invisible group-hover:opacity-100 group-hover:visible'}`}
+                        >
+                            <MoreHorizontal size={16} />
+                        </button>
+                        
+                        {/* Context Menu */}
+                        {sessionMenuOpenId === session.id && (
+                            <div className="absolute right-0 top-6 w-28 bg-surface border border-border rounded-lg shadow-xl z-50 overflow-hidden flex flex-col animate-scale-in">
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSessions(prev => prev.map(s => s.id === session.id ? { ...s, isPinned: !s.isPinned } : s));
+                                        setSessionMenuOpenId(null);
+                                    }}
+                                    className="flex items-center gap-2 px-3 py-2 text-xs text-text-secondary hover:bg-surface-highlight hover:text-blue-500 text-left transition-colors"
+                                >
+                                    <Pin size={12} className={session.isPinned ? "fill-current text-blue-500" : ""} /> 
+                                    {session.isPinned ? '取消置顶' : '置顶'}
+                                </button>
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setRenamingSessionId(session.id);
+                                        setRenameValue(session.title);
+                                        setSessionMenuOpenId(null);
+                                    }}
+                                    className="flex items-center gap-2 px-3 py-2 text-xs text-text-secondary hover:bg-surface-highlight hover:text-blue-500 text-left transition-colors"
+                                >
+                                    <Edit size={12} /> 重命名
+                                </button>
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSessions(prev => prev.filter(s => s.id !== session.id));
+                                        if (activeSessionId === session.id) {
+                                            setActiveSessionId(null);
+                                            setMessages([]);
+                                            setSelectedSkill(null);
+                                        }
+                                        setSessionMenuOpenId(null);
+                                    }}
+                                    className="flex items-center gap-2 px-3 py-2 text-xs text-text-secondary hover:bg-surface-highlight hover:text-red-500 text-left border-t border-border transition-colors"
+                                >
+                                    <Trash2 size={12} /> 删除
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
               ))}
               
@@ -1092,15 +1169,15 @@ const AgentView: React.FC = () => {
                      </div>
                  </div>
               ) : (
-                <div className="max-w-4xl mx-auto flex flex-col gap-6 p-4 pt-24 pb-32">
+                <div className="max-w-4xl mx-auto flex flex-col gap-6 p-4 pt-24 pb-56">
                     {messages.map((msg, idx) => (
                     <div key={idx} className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''} animate-slide-up`}>
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'model' ? 'bg-gradient-to-tr from-blue-600 to-indigo-600 text-white' : 'bg-border-highlight text-text-secondary'}`}>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'model' ? 'bg-gradient-to-tr from-blue-600 to-indigo-600 text-white' : 'bg-surface-highlight text-text-secondary'}`}>
                         {msg.role === 'model' ? <Bot size={18} /> : <UserCheck size={18} />}
                         </div>
-                        <div className={`max-w-[80%] rounded-2xl p-4 shadow-md ${msg.role === 'model' ? 'bg-transparent text-text-primary' : 'bg-surface-highlight text-text-primary'}`}>
+                        <div className={`max-w-[80%] ${msg.role === 'model' ? 'pt-1' : 'bg-surface-highlight text-text-primary rounded-2xl p-4'}`}>
                             {msg.role === 'model' && msg.type && (
-                                <div className="text-sm font-bold text-text-primary mb-2 flex items-center gap-2">
+                                <div className="text-sm font-bold text-text-primary mb-3 flex items-center gap-2">
                                     政务AI写作助手
                                 </div>
                             )}
@@ -1108,15 +1185,33 @@ const AgentView: React.FC = () => {
                                 <div className="w-full">
                                     {msg.type === 'writing_form' && (
                                         <>
-                                            <div className="text-sm text-text-primary mb-2">{msg.text}</div>
+                                            <div className="text-sm text-text-primary mb-3">{msg.text}</div>
                                             {renderWritingForm()}
                                         </>
                                     )}
                                     {msg.type === 'writing_outline' && renderWritingOutline()}
                                     {msg.type === 'writing_result' && renderWritingResult()}
+                                    {msg.type === 'writing_full' && (
+                                        <div className="space-y-8">
+                                            <div>
+                                                <div className="text-sm text-text-primary mb-3">{msg.text}</div>
+                                                {renderWritingForm()}
+                                            </div>
+                                            {renderWritingOutline()}
+                                            {renderWritingResult()}
+                                        </div>
+                                    )}
                                 </div>
                             ) : (
-                                <p className="whitespace-pre-wrap leading-relaxed text-sm">{msg.text}</p>
+                                <div className="whitespace-pre-wrap leading-relaxed text-sm text-text-primary">{msg.text}</div>
+                            )}
+                            {msg.role === 'model' && (
+                                <div className="flex items-center gap-3 text-text-muted mt-4">
+                                    <button className="hover:text-blue-500 transition-colors" title="点赞"><ThumbsUp size={16}/></button>
+                                    <button className="hover:text-red-500 transition-colors" title="点踩"><ThumbsDown size={16}/></button>
+                                    <button className="hover:text-blue-500 transition-colors" title="复制内容"><Copy size={16}/></button>
+                                    <button className="hover:text-blue-500 transition-colors" title="重新生成"><RefreshCw size={16}/></button>
+                                </div>
                             )}
                         </div>
                     </div>
